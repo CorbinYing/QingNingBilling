@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiesu.qingningbilling.mapper.SysLabelMapper">
+  <resultMap id="baseResult" type="com.xiesu.qingningbilling.entity.SysLabel"
+    extends="com.xiesu.qingningbilling.mapper.AbstractEntityMapper.AbstractResult">
+    <result column="label_id" property="labelId"/>
+    <result column="label_name" property="labelName"/>
+  </resultMap>
+  <select id="selectAll" resultMap="baseResult" >
+    select *
+    from sys_label;
+  </select>
+
+</mapper>

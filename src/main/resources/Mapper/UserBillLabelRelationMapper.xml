@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiesu.qingningbilling.mapper.UserBillLabelRelationMapper">
+  <resultMap id="baseResult" type="com.xiesu.qingningbilling.entity.UserBillLabelRelation"
+    extends="com.xiesu.qingningbilling.mapper.AbstractEntityMapper.AbstractResult">
+
+    <result property="billLabelId" column="bill_label_id"/>
+    <result property="labelId" column="label_id"/>
+
+    <result property="deleteFlag" column="delete_flag"/>
+  </resultMap>
+
+</mapper>
