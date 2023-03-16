@@ -9,20 +9,33 @@ import java.util.Map;
 /**
  * @author xiesu
  */
-public abstract class AbstractResponse implements Serializable {
+public interface AbstractResponse extends Serializable {
 
-    protected static String ERR_CODE_KEY = "err_code";
-    protected static String ERR_MSG_KEY = "err_msg";
-    protected static String RES_RESULT_KEY = "result";
+    /**
+     * 返回内容的code值，code=0成功，其他均为时报
+     */
+    String ERR_CODE_KEY = "err_code";
+    /**
+     * 返回消息
+     */
+    String ERR_MSG_KEY = "err_msg";
+    /**
+     * 返回结果
+     */
+    String RES_RESULT_KEY = "result";
+    /**
+     * 返回结果只有一个字段内容时，默认该返回值的key=data
+     */
+    String SINGLE_RESULT_KEY = "data";
 
     /**
      * {@link OkResponseResult#success()}或{@link
      * ErrResponseResult#failed(AbstractCustomerException)} ()}builder的构建结果，包含code，msg
      */
-    protected final Map<Object, Object> responseMap = new LinkedHashMap<>();
+    Map<Object,Object> responseMap = new LinkedHashMap<>();
 
 
-    public Map<Object, Object> getResult() {
+    default Map<?, ?> getResult() {
         return responseMap;
     }
 

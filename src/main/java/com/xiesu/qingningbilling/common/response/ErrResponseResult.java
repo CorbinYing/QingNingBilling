@@ -15,7 +15,7 @@ import org.springframework.util.Assert;
  * @author xiesu
  */
 @Getter
-public class ErrResponseResult extends AbstractResponse {
+public class ErrResponseResult implements AbstractResponse {
 
     private ErrResponseResult(AbstractCustomerException e) {
 
@@ -44,6 +44,8 @@ public class ErrResponseResult extends AbstractResponse {
      * @param e e
      */
     public static ErrResponseResult failed(AbstractCustomerException e) {
+        //此处清空结果，防止返回OkResponseResult过程中出错时，异常拦截器拦截后返回ErrResponseResult中有脏数据
+        responseMap.clear();
         return new ErrResponseResult(e);
     }
 

@@ -2,20 +2,25 @@ package com.xiesu.qingningbilling.common.handler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import com.xiesu.qingningbilling.common.except.UnExposedException;
 import com.xiesu.qingningbilling.common.response.AbstractResponse;
 import com.xiesu.qingningbilling.common.response.OkResponseResult;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
+import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 /**
  * @author xiesu
  */
+@Slf4j
 @RestControllerAdvice
 public class ResponseHandlerAdvice implements ResponseBodyAdvice<Object> {
 
@@ -37,7 +42,7 @@ public class ResponseHandlerAdvice implements ResponseBodyAdvice<Object> {
         //System.out.println(returnType.getMethod().getReturnType());
 
         return true;
-
+        //return false;
     }
 
     /**
@@ -60,20 +65,13 @@ public class ResponseHandlerAdvice implements ResponseBodyAdvice<Object> {
     public Object beforeBodyWrite(Object body, MethodParameter returnType,
             MediaType selectedContentType, Class selectedConverterType, ServerHttpRequest request,
             ServerHttpResponse response) {
-        //处理httpStatus
-        handleHttpStatus(response, body);
+
         //格式化返回结果
-        body = formatBody(body);
+        body = formatBody(body, returnType, response);
         //TODO :加密body
         return body;
 
 
-    }
-
-    private void handleHttpStatus(ServerHttpResponse response, Object body) {
-        //if (body instanceof AbstractResponse) {
-        //    response.setStatusCode(((AbstractResponse) body).getHttpStatus());
-        //}
     }
 
     /**
@@ -82,23 +80,35 @@ public class ResponseHandlerAdvice implements ResponseBodyAdvice<Object> {
      * @param body object
      * @return {@link AbstractResponse}
      */
-    @SuppressWarnings("unchecked")
-    private Object formatBody(Object body) {
+    private Object formatBody(Object body, MethodParameter returnType,
+            ServerHttpResponse response) {
         if (body instanceof AbstractResponse) {
             return ((AbstractResponse) body).getResult();
         } else if (body instanceof Map) {
-            return OkResponseResult.success().items((Map<Object, Object>) body).build().getResult();
+            Type type = returnType.getGenericParameterType();
+            Type[] actualTypeArguments = ((ParameterizedType) type).getActualTypeArguments();
+
+            if (!Object.class.equals(actualTypeArguments[0])) {
+                log.error("设置返回类型为Map时，key必须为Object类型");
+                throw new UnExposedException();
+            }
+            if (!Object.class.equals(actualTypeArguments[1])) {
+                log.error("设置返回类型为Map时，value必须为Object类型");
+                throw new UnExposedException();
+            }
         } else if (body instanceof String) {
+            ((ServletServerHttpResponse) response).getServletResponse()
+                    .setContentType(MediaType.APPLICATION_JSON_VALUE);
             //String 是直接返回，需要手动转json，不然会报错
             try {
                 return new ObjectMapper().writeValueAsString(
-                        OkResponseResult.success().item("result", body).build().getResult());
+                        OkResponseResult.success(body).getResult());
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             }
         }
         //其他类型则直接构建
-        return OkResponseResult.success().item("result", body).build().getResult();
+        return OkResponseResult.success(body).getResult();
 
     }
 

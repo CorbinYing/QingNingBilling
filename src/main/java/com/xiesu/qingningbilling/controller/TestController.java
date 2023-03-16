@@ -39,4 +39,47 @@ public class TestController {
                 .build();
     }
 
+
+
+
+    @GetMapping("/testMap")
+    public Map<Object,Object> testMap(){
+        Map<Object,Object> map=new HashMap<>();
+        map.put(1,"qwe");
+        map.put(2,"wert");
+
+        return map;
+    }
+
+
+
+    @GetMapping("/testString")
+    public String testString(){
+        return "zhangsan";
+    }
+
+
+    @GetMapping("/testInteger")
+    public Integer testInteger(){
+        return 1;
+    }
+
+    @GetMapping("/testInt")
+    public int testInt(){
+        return 1;
+    }
+
+    @GetMapping("/testObject")
+    public SysLabel testObj(){
+        List<SysLabel> sysLabels = sysLabelService.findAll();
+        return sysLabels.get(0);
+    }
+
+
+    @GetMapping("/testList")
+    public List<SysLabel> testList(){
+        List<SysLabel> sysLabels = sysLabelService.findAll();
+        return sysLabels;
+    }
+
 }

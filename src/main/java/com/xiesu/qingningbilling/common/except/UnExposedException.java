@@ -6,7 +6,7 @@ import java.util.Objects;
 
 /**
  * Action ： 不可向外部暴露的异常信息，调用者只需知道系统异常即可， 一般业务不会手动抛出该类型异常，自写工具类转换等异常问题可选择该异常类型
- *
+ * 对于不可向外部暴露的异常（例如：IOEXception_RunTimeException），则应该被拦截，打印日志信息，但对外部隐藏异常内容，显示系统服务异常即可。
  * @author xiesu
  */
 

@@ -25,7 +25,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
  *
  * @author xiesu
  */
-public class OkResponseResult extends AbstractResponse {
+public class OkResponseResult implements AbstractResponse {
 
     private OkResponseResult(Map<Object, Object> data) {
         responseMap.put(ERR_CODE_KEY, ResponseCode.SUCC_0);
@@ -36,7 +36,23 @@ public class OkResponseResult extends AbstractResponse {
         responseMap.put(RES_RESULT_KEY, data);
     }
 
+    private OkResponseResult(Object singleResponseResult) {
+        responseMap.put(ERR_CODE_KEY, ResponseCode.SUCC_0);
 
+        //获取当前线程的local，获取不到使用defaultLocale
+        Locale locale = LocaleContextHolder.getLocale();
+        responseMap.put(ERR_MSG_KEY, ResponseDefaultMsg.getDefaultMsg(ResponseCode.SUCC_0, locale));
+        responseMap.put(RES_RESULT_KEY, singleResponseResult);
+    }
+
+    public static OkResponseResult success(Object singleResponseResult) {
+        return new OkResponseResult(singleResponseResult);
+    }
+
+    /**
+     * 链式构造返回结果
+     * @return SucResponseBuilder
+     */
     public static SucResponseBuilder success() {
         return new SucResponseBuilder();
     }
@@ -44,7 +60,7 @@ public class OkResponseResult extends AbstractResponse {
     public static class SucResponseBuilder {
 
         /**
-         * 存放最终结果的有序mapß
+         * 存放最终结果的有序
          */
         private final Map<Object, Object> data = new LinkedHashMap<>();
 
