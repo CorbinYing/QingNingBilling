@@ -1,4 +1,3 @@
-package com.xiesu.core.common;
 /*
  * Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -12,10 +11,12 @@ package com.xiesu.core.common;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.xiesu.core.common;
+
 /**
  * 引用 <a href="https://github.com/Meituan-Dianping/Leaf">美团分布式id算法</a> 项目文件
  */
-public enum  Status {
+public enum Status {
     SUCCESS,
     EXCEPTION
 }

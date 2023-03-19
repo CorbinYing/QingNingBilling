@@ -1,4 +1,3 @@
-package com.xiesu.core.common;
 /*
  * Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -12,10 +11,13 @@ package com.xiesu.core.common;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.xiesu.core.common;
+
 /**
  * 引用 <a href="https://github.com/Meituan-Dianping/Leaf">美团分布式id算法</a> 项目文件
  */
 public class Constants {
+
     public static final String LEAF_SEGMENT_ENABLE = "leaf.segment.enable";
     public static final String LEAF_JDBC_URL = "leaf.jdbc.url";
     public static final String LEAF_JDBC_USERNAME = "leaf.jdbc.username";

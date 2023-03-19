@@ -1,4 +1,3 @@
-package com.xiesu.exception;
 /*
  * Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -12,10 +11,13 @@ package com.xiesu.exception;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.xiesu.exception;
+
 /**
  * 引用 <a href="https://github.com/Meituan-Dianping/Leaf">美团分布式id算法</a> 项目文件
  */
-public class InitException extends Exception{
+public class InitException extends Exception {
+
     public InitException(String msg) {
         super(msg);
     }

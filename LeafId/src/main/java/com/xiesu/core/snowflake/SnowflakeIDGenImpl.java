@@ -1,13 +1,3 @@
-package com.xiesu.core.snowflake;
-
-import com.google.common.base.Preconditions;
-import com.xiesu.core.IDGen;
-import com.xiesu.core.common.Result;
-import com.xiesu.core.common.Status;
-import com.xiesu.core.common.Utils;
-import java.util.Random;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 /*
  * Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,6 +11,16 @@ import org.slf4j.LoggerFactory;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.xiesu.core.snowflake;
+
+import com.google.common.base.Preconditions;
+import com.xiesu.core.IDGen;
+import com.xiesu.core.common.Result;
+import com.xiesu.core.common.Status;
+import com.xiesu.core.common.Utils;
+import java.util.Random;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 引用 <a href="https://github.com/Meituan-Dianping/Leaf">美团分布式id算法</a> 项目文件
@@ -58,9 +58,11 @@ public class SnowflakeIDGenImpl implements IDGen {
      */
     public SnowflakeIDGenImpl(String zkAddress, int port, long twepoch) {
         this.twepoch = twepoch;
-        Preconditions.checkArgument(timeGen() > twepoch, "Snowflake not support twepoch gt currentTime");
+        Preconditions.checkArgument(timeGen() > twepoch,
+                "Snowflake not support twepoch gt currentTime");
         final String ip = Utils.getIp();
-        SnowflakeZookeeperHolder holder = new SnowflakeZookeeperHolder(ip, String.valueOf(port), zkAddress);
+        SnowflakeZookeeperHolder holder = new SnowflakeZookeeperHolder(ip, String.valueOf(port),
+                zkAddress);
         LOGGER.info("twepoch:{} ,ip:{} ,zkAddress:{} port:{}", twepoch, ip, zkAddress, port);
         boolean initFlag = holder.init();
         if (initFlag) {
@@ -69,7 +71,8 @@ public class SnowflakeIDGenImpl implements IDGen {
         } else {
             Preconditions.checkArgument(initFlag, "Snowflake Id Gen is not init ok");
         }
-        Preconditions.checkArgument(workerId >= 0 && workerId <= maxWorkerId, "workerID must gte 0 and lte 1023");
+        Preconditions.checkArgument(workerId >= 0 && workerId <= maxWorkerId,
+                "workerID must gte 0 and lte 1023");
     }
 
     @Override
@@ -104,7 +107,8 @@ public class SnowflakeIDGenImpl implements IDGen {
             sequence = RANDOM.nextInt(100);
         }
         lastTimestamp = timestamp;
-        long id = ((timestamp - twepoch) << timestampLeftShift) | (workerId << workerIdShift) | sequence;
+        long id = ((timestamp - twepoch) << timestampLeftShift) | (workerId << workerIdShift)
+                | sequence;
         return new Result(id, Status.SUCCESS);
 
     }

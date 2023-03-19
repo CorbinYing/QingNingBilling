@@ -1,7 +1,3 @@
-package com.xiesu;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 /*
  * Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,14 +11,19 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.xiesu;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 /**
  * 引用 <a href="https://github.com/Meituan-Dianping/Leaf">美团分布式id算法</a> 项目文件
  */
 @SpringBootApplication
 public class LeafIdApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(LeafIdApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(LeafIdApplication.class, args);
+    }
 
 }

@@ -1,7 +1,3 @@
-package com.xiesu.exception;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
 /*
  * Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,11 +11,17 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.xiesu.exception;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
 /**
  * 引用 <a href="https://github.com/Meituan-Dianping/Leaf">美团分布式id算法</a> 项目文件
  */
-@ResponseStatus(code=HttpStatus.INTERNAL_SERVER_ERROR)
+@ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
 public class LeafServerException extends RuntimeException {
+
     public LeafServerException(String msg) {
         super(msg);
     }

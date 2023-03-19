@@ -1,3 +1,16 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.xiesu.qingningbilling.common.except;
 
 import com.xiesu.qingningbilling.common.response.ResponseCode;
@@ -7,6 +20,7 @@ import java.util.Objects;
 /**
  * Action ： 不可向外部暴露的异常信息，调用者只需知道系统异常即可， 一般业务不会手动抛出该类型异常，自写工具类转换等异常问题可选择该异常类型
  * 对于不可向外部暴露的异常（例如：IOEXception_RunTimeException），则应该被拦截，打印日志信息，但对外部隐藏异常内容，显示系统服务异常即可。
+ *
  * @author xiesu
  */
 
