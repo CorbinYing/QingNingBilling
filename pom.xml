@@ -10,7 +10,6 @@
   <description>QingNingBilling</description>
   <packaging>pom</packaging>
 
-
   <modules>
     <module>QingNing</module>
     <module>LeafId</module>
