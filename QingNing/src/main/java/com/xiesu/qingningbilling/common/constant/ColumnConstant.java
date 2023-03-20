@@ -18,6 +18,8 @@ import java.time.LocalDateTime;
 
 /**
  * 数据库字段默认常量值
+ *
+ * @author xiesu
  */
 public abstract class ColumnConstant implements Serializable {
 

@@ -13,6 +13,11 @@
  */
 package com.xiesu.qingningbilling.controller;
 
+/**
+ * 公共Controller，所有Controller均须继承，可定义通用相关方法
+ *
+ * @author xiesu
+ */
 public abstract class AbstractBaseController {
 
 }

@@ -22,6 +22,8 @@ import java.io.Serializable;
 
 /**
  * Java对象克隆工具类
+ *
+ * @author xiesu
  */
 public final class CloneUtils {
 

@@ -15,6 +15,11 @@ package com.xiesu.qingningbilling.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 用户标签操作接口层
+ *
+ * @author xiesu
+ */
 @RestController
 public class UserLabelOperateBaseController extends AbstractBaseController {
 

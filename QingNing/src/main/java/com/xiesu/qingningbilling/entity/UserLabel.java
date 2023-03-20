@@ -21,6 +21,8 @@ import lombok.Setter;
 
 /**
  * 用户标签表
+ *
+ * @author xiesu
  */
 @Getter
 @Setter

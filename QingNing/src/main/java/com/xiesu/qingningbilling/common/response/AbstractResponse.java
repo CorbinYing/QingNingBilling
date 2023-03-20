@@ -20,6 +20,8 @@ import java.util.Map;
 
 
 /**
+ * 返回结果抽象接口
+ *
  * @author xiesu
  */
 public interface AbstractResponse extends Serializable {

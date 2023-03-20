@@ -19,6 +19,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
+ * 抽象实体公共基础类
+ *
  * @author xiesu
  */
 @Getter

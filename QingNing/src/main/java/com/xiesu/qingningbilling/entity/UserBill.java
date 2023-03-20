@@ -20,6 +20,8 @@ import lombok.Setter;
 
 /**
  * 用户账单记录表
+ *
+ * @author xiesu
  */
 @Getter
 @Setter

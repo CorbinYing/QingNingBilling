@@ -15,6 +15,11 @@ package com.xiesu.qingningbilling.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 处理用户账单相关业务接口层
+ *
+ * @author xiesu
+ */
 @RestController
 public class UserBillOperateBaseController extends AbstractBaseController {
 

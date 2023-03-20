@@ -13,6 +13,11 @@
  */
 package com.xiesu.qingningbilling.mapper;
 
+/**
+ * 用户账单标签关联中间表Mapper
+ *
+ * @author xiesu
+ */
 public interface UserBillLabelRelationMapper {
 
 }

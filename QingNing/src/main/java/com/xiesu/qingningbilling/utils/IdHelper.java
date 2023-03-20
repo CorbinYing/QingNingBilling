@@ -24,6 +24,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+/**
+ * 获取全局唯一、趋势递增的分布式ID工具类
+ */
 public final class IdHelper {
 
     public static Long nextId() {

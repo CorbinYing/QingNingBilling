@@ -20,6 +20,11 @@ import jakarta.annotation.Resource;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
+/**
+ * 系统标签实现类service，处理系统初始化标签等业务的service
+ *
+ * @author xiesu
+ */
 @Service
 public class SysLabelServiceImpl implements SysLabelService {
 

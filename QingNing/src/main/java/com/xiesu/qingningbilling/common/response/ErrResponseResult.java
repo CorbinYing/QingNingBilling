@@ -23,7 +23,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.util.Assert;
 
 /**
- * Action：程序异常统一返回结果
+ * Action：程序异常统一返回结果，值返回err_code和err_msg
  *
  * @author xiesu
  */

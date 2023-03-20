@@ -21,6 +21,8 @@ import lombok.Setter;
 
 /**
  * 账户表
+ *
+ * @author xiesu
  */
 @Getter
 @Setter

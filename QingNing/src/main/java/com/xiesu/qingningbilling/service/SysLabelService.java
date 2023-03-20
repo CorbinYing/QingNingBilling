@@ -16,7 +16,11 @@ package com.xiesu.qingningbilling.service;
 import com.xiesu.qingningbilling.entity.SysLabel;
 import java.util.List;
 import org.springframework.stereotype.Service;
-
+/**
+ * 系统标签实现类service，处理系统初始化标签等业务的service
+ *
+ * @author xiesu
+ */
 @Service
 public interface SysLabelService {
 

@@ -13,6 +13,11 @@
  */
 package com.xiesu.qingningbilling.mapper;
 
+/**
+ * 抽象公共实体字段对应mapper
+ *
+ * @author xiesu
+ */
 public interface AbstractEntityMapper {
 
 }

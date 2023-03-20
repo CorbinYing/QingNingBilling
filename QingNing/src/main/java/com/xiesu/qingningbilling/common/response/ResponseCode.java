@@ -15,6 +15,9 @@ package com.xiesu.qingningbilling.common.response;
 
 import java.io.Serializable;
 
+/**
+ * 定义定义错误码，与配置文件的code相对应
+ */
 public class ResponseCode implements Serializable {
 
     /**

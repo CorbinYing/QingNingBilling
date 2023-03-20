@@ -31,6 +31,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 /**
+ * 拦截Spring返回结果，包装返回值，统一返回格式
+ *
  * @author xiesu
  */
 @Slf4j

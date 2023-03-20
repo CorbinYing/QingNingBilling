@@ -18,6 +18,8 @@ import lombok.Getter;
 
 /**
  * 自定义异常基类
+ *
+ * @author xiesu
  */
 @Getter
 public abstract class AbstractCustomerException extends RuntimeException {

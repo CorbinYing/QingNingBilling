@@ -13,6 +13,11 @@
  */
 package com.xiesu.qingningbilling.service;
 
-public interface UserBillRecordService {
+/**
+ * 用户账单记录处理业务类service
+ *
+ * @author xiesu
+ */
+public interface UserBillService {
 
 }

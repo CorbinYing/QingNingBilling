@@ -13,6 +13,11 @@
  */
 package com.xiesu.qingningbilling.mapper;
 
+/**
+ * 用户账单mapper
+ *
+ * @author xiesu
+ */
 public interface UserBillMapper {
 
 }

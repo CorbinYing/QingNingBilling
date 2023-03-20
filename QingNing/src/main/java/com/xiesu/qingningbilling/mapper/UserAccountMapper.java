@@ -15,6 +15,11 @@ package com.xiesu.qingningbilling.mapper;
 
 import com.xiesu.qingningbilling.entity.UserAccount;
 
+/**
+ * 用户账户Mapper
+ *
+ * @author xiesu
+ */
 public interface UserAccountMapper {
 
     UserAccount insertOne(UserAccount account);

@@ -17,7 +17,11 @@ import com.xiesu.qingningbilling.entity.SysLabel;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
-
+/**
+ * 系统标签表Mapper
+ *
+ * @author xiesu
+ */
 @Mapper
 public interface SysLabelMapper {
 
