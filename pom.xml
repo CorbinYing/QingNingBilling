@@ -11,6 +11,7 @@
   <packaging>pom</packaging>
 
   <modules>
+    <module>Auth</module>
     <module>QingNing</module>
     <module>LeafId</module>
   </modules>
@@ -19,14 +20,16 @@
   <properties>
     <java.version>19</java.version>
     <okhttp.version>4.10.0</okhttp.version>
+    <guava.version>31.0-jre</guava.version>
     <curator.version>2.6.0</curator.version>
+    <commons-io.version>2.11.0</commons-io.version>
     <spring-boot.version>3.0.2</spring-boot.version>
     <project.version>0.0.1-SNAPSHOT</project.version>
-    <commons-io.version>2.11.0</commons-io.version>
-    <guava.version>31.0-jre</guava.version>
     <spring-cloud.version>2022.0.1</spring-cloud.version>
-    <druid-spring-boot-starter.version>1.2.16</druid-spring-boot-starter.version>
+    <org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
     <mysql-connector-java.version>8.0.32</mysql-connector-java.version>
+    <druid-spring-boot-starter.version>1.2.16</druid-spring-boot-starter.version>
+    <oauth2-authorization-server.version>1.0.1</oauth2-authorization-server.version>
     <mybatis-spring-boot-starter.version>3.0.1</mybatis-spring-boot-starter.version>
 
     <!--    <nacos.version>2021.1</nacos.version>-->
@@ -88,24 +91,17 @@
           </exclusion>
         </exclusions>
       </dependency>
-
-      <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-undertow</artifactId>
-        <version>${spring-boot.version}</version>
-      </dependency>
-
-<!--      <dependency>-->
-<!--        <groupId>org.apache.curator</groupId>-->
-<!--        <artifactId>curator-recipes</artifactId>-->
-<!--        <version>${curator.version}</version>-->
-<!--        <exclusions>-->
-<!--          <exclusion>-->
-<!--            <artifactId>log4j</artifactId>-->
-<!--            <groupId>log4j</groupId>-->
-<!--          </exclusion>-->
-<!--        </exclusions>-->
-<!--      </dependency>-->
+      <!--      <dependency>-->
+      <!--        <groupId>org.apache.curator</groupId>-->
+      <!--        <artifactId>curator-recipes</artifactId>-->
+      <!--        <version>${curator.version}</version>-->
+      <!--        <exclusions>-->
+      <!--          <exclusion>-->
+      <!--            <artifactId>log4j</artifactId>-->
+      <!--            <groupId>log4j</groupId>-->
+      <!--          </exclusion>-->
+      <!--        </exclusions>-->
+      <!--      </dependency>-->
 
       <dependency>
         <groupId>commons-io</groupId>
@@ -117,6 +113,17 @@
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
         <version>${guava.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.mapstruct</groupId>
+        <artifactId>mapstruct</artifactId>
+        <version>${org.mapstruct.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-oauth2-authorization-server</artifactId>
+        <version>${oauth2-authorization-server.version}</version>
       </dependency>
 
       <!--      <dependency>-->
