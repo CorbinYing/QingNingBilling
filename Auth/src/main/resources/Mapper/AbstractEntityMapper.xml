@@ -16,9 +16,9 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xiesu.mapper.AbstractEntityMapper">
+<mapper namespace="com.xiesu.auth.mapper.AbstractEntityMapper">
 
-  <resultMap id="AbstractResult" type="com.xiesu.entity.AbstractEntity">
+  <resultMap id="AbstractResult" type="com.xiesu.auth.entity.AbstractEntity">
     <id property="id" column="id"/>
     <result property="version" column="version"/>
     <result property="createTime" column="gmt_create"/>
