@@ -11,8 +11,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xiesu.controller;
+package com.xiesu.controller.account;
 
+import com.xiesu.controller.AbstractBaseController;
 import org.springframework.web.bind.annotation.RestController;
 
 /**

@@ -26,7 +26,7 @@ public interface UserBillService {
      * 新增一个用户账单，并返回持久化后的信息
      *
      * @param addBillDto 账单信息
-     * @return 持久化的账单信息ß
+     * @return 持久化的账单信息
      */
     UserBillDTO addOneBill(UserBillDTO addBillDto);
 
