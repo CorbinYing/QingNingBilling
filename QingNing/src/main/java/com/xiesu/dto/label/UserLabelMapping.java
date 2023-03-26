@@ -11,32 +11,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-<<<<<<<< HEAD:QingNing/src/main/java/com/xiesu/domain/SysLabel.java
-package com.xiesu.domain;
-========
-package com.xiesu.entity;
->>>>>>>> origin/main:QingNing/src/main/java/com/xiesu/entity/SysLabel.java
+package com.xiesu.dto.label;
 
-import java.io.Serializable;
-import lombok.Getter;
-import lombok.Setter;
+import com.xiesu.entity.UserLabel;
+import java.util.List;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
 /**
- * 系统标签表
- *
- * @author xiesu
+ * @author xiesu created on 2023/3/25 21:33
  */
-@Getter
-@Setter
-public class SysLabel extends AbstractEntity implements Serializable {
+@Mapper
+public interface UserLabelMapping {
 
-    /**
-     * 标签id
-     */
-    private Long labelId;
-    /**
-     * 标签名
-     */
-    private String labelName;
+    UserLabelMapping INSTANCE = Mappers.getMapper(UserLabelMapping.class);
+
+
+    UserLabelDTO convert(UserLabel userLabel);
+
+    List<UserLabelDTO> convert(List<UserLabel> userLabelList);
+
 
 }

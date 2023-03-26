@@ -11,32 +11,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-<<<<<<<< HEAD:QingNing/src/main/java/com/xiesu/domain/SysLabel.java
-package com.xiesu.domain;
-========
-package com.xiesu.entity;
->>>>>>>> origin/main:QingNing/src/main/java/com/xiesu/entity/SysLabel.java
+package com.xiesu.dto.label;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import java.io.Serializable;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 系统标签表
- *
- * @author xiesu
+ * @author xiesu created on 2023/3/23 23:31
  */
 @Getter
 @Setter
-public class SysLabel extends AbstractEntity implements Serializable {
+public class UserLabelDTO implements Serializable {
 
     /**
      * 标签id
      */
+    @JsonFormat(shape = Shape.STRING)
     private Long labelId;
     /**
-     * 标签名
+     * 标签人
      */
     private String labelName;
-
 }

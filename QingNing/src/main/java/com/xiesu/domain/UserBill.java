@@ -11,7 +11,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+<<<<<<<< HEAD:QingNing/src/main/java/com/xiesu/domain/UserBill.java
 package com.xiesu.domain;
+========
+package com.xiesu.entity;
+>>>>>>>> origin/main:QingNing/src/main/java/com/xiesu/entity/UserBill.java
 
 import java.io.Serializable;
 import java.math.BigDecimal;

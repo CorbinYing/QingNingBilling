@@ -11,7 +11,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+<<<<<<<< HEAD:QingNing/src/main/java/com/xiesu/service/impl/UserAccountServiceImpl.java
 package com.xiesu.service.impl;
+========
+package com.xiesu.controller;
+>>>>>>>> origin/main:QingNing/src/main/java/com/xiesu/controller/UserBillOperateController.java
 
 import com.xiesu.service.UserAccountService;
 import org.springframework.stereotype.Service;
@@ -21,7 +25,12 @@ import org.springframework.stereotype.Service;
  *
  * @author xiesu created on 2023/3/20 09:12
  */
+<<<<<<<< HEAD:QingNing/src/main/java/com/xiesu/service/impl/UserAccountServiceImpl.java
 @Service
 public class UserAccountServiceImpl implements UserAccountService {
+========
+@RestController
+public class UserBillOperateController extends AbstractBaseController {
+>>>>>>>> origin/main:QingNing/src/main/java/com/xiesu/controller/UserBillOperateController.java
 
 }
