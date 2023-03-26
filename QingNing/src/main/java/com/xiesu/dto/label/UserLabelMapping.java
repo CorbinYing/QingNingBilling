@@ -13,7 +13,7 @@
  */
 package com.xiesu.dto.label;
 
-import com.xiesu.entity.UserLabel;
+import com.xiesu.domain.UserLabel;
 import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

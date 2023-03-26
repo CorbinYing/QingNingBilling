@@ -13,6 +13,7 @@
  */
 package com.xiesu.service.impl;
 
+import com.xiesu.dto.bill.UserBillDTO;
 import com.xiesu.service.UserBillService;
 import org.springframework.stereotype.Service;
 
@@ -24,4 +25,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserBillServiceImpl implements UserBillService {
 
+    @Override
+    public UserBillDTO addOneBill(UserBillDTO addBillDto) {
+        return null;
+    }
 }

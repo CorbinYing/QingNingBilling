@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
  * @author xiesu created on 2023/3/20 09:15
  */
 @Service
-public class UserLabelServiceImpl implements UserLabelService {
+public class UserLabelServiceImpl {
 
     //@Override
     //public List<UserLabel> findByAccountId(String accountId) {

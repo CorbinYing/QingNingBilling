@@ -30,14 +30,14 @@ public class UnExposedException extends AbstractCustomerException {
      * 不可暴露异常，异常码为-1，不允许修改
      */
     public UnExposedException() {
-        super(ResponseCode.ERR_SYSTEM, null, null);
+        super(ResponseCode.ERR_BUSI, null, null);
     }
 
     /**
      * 不可暴露异常，异常码为-1，不允许修改
      */
     public UnExposedException(String msg) {
-        super(ResponseCode.ERR_SYSTEM, msg, null);
+        super(ResponseCode.ERR_BUSI, msg, null);
     }
 
 
@@ -48,7 +48,7 @@ public class UnExposedException extends AbstractCustomerException {
      * @param params null able
      */
     public UnExposedException(String errMsg, Object[] params) {
-        super(ResponseCode.ERR_SYSTEM, MessageFormat.format(Objects.requireNonNull(errMsg), params),
+        super(ResponseCode.ERR_BUSI, MessageFormat.format(Objects.requireNonNull(errMsg), params),
                 null);
     }
 
@@ -58,7 +58,7 @@ public class UnExposedException extends AbstractCustomerException {
      * @param params null able
      */
     public UnExposedException(Object... params) {
-        super(ResponseCode.ERR_SYSTEM, null, params);
+        super(ResponseCode.ERR_BUSI, null, params);
     }
 
 }

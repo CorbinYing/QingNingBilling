@@ -11,11 +11,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-<<<<<<<< HEAD:QingNing/src/main/java/com/xiesu/mapper/AbstractEntityMapper.java
+
 package com.xiesu.mapper;
-========
-package com.xiesu.service;
->>>>>>>> origin/main:QingNing/src/main/java/com/xiesu/service/UserBillService.java
+
 
 /**
  * 抽象公共实体字段对应mapper

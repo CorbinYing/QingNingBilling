@@ -16,9 +16,7 @@ package com.xiesu.common.response;
 import com.xiesu.common.except.AbstractCustomerException;
 import com.xiesu.utils.ObjectsUtil;
 import java.io.Serializable;
-import java.util.AbstractMap;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
