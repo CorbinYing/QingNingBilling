@@ -14,6 +14,7 @@
 package com.xiesu.service;
 
 import com.xiesu.dto.bill.UserBillDTO;
+import java.util.List;
 
 /**
  * 用户账单记录处理业务类service
@@ -29,5 +30,19 @@ public interface UserBillService {
      * @return 持久化的账单信息
      */
     UserBillDTO addOneBill(UserBillDTO addBillDto);
+
+    /**
+     * 批量删除账单信息(同步删除标签-账单中间表信息)
+     *
+     * @param deleteBillIdList 带删除账单id
+     */
+    void deleteBatch(List<Long> deleteBillIdList);
+
+    /**
+     * 删除账单信息(同步删除标签-账单中间表信息)
+     *
+     * @param deleteBillId 带删除账单id
+     */
+    void deleteOne(Long deleteBillId);
 
 }

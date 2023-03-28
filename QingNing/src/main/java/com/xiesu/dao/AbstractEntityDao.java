@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-package com.xiesu.mapper;
+package com.xiesu.dao;
 
 
 /**
@@ -20,6 +20,6 @@ package com.xiesu.mapper;
  *
  * @author xiesu
  */
-public interface AbstractEntityMapper {
+public interface AbstractEntityDao {
 
 }

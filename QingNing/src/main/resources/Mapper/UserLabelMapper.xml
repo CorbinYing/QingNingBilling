@@ -16,9 +16,9 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xiesu.mapper.UserLabelMapper">
+<mapper namespace="com.xiesu.dao.UserLabelDao">
   <resultMap id="baseResult" type="com.xiesu.domain.UserLabel"
-    extends="com.xiesu.mapper.AbstractEntityMapper.AbstractResult">
+    extends="com.xiesu.dao.AbstractEntityDao.AbstractResult">
 
     <result property="labelId" column="label_id"/>
     <result property="accountId" column="account_id"/>
@@ -26,4 +26,24 @@
 
     <result property="deleteFlag" column="delete_flag"/>
   </resultMap>
+
+
+  <select id="selectByAccountId" resultMap="baseResult">
+    select l.*
+    from user_label as l
+    where l.account_id = #{accountId}
+  </select>
+
+  <select id="selectByLabelId" resultMap="baseResult">
+    select l.*
+    from user_label as l
+    where l.label_id = #{labelId}
+
+  </select>
+
+  <delete id="deleteByLabelId">
+    delete
+    from user_label as l
+    where l.label_id = #{labelId}
+  </delete>
 </mapper>

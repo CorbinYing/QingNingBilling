@@ -14,7 +14,7 @@
 package com.xiesu.service.impl;
 
 import com.xiesu.domain.SysLabel;
-import com.xiesu.mapper.SysLabelMapper;
+import com.xiesu.dao.SysLabelDao;
 import com.xiesu.service.SysLabelService;
 import jakarta.annotation.Resource;
 import java.util.List;
@@ -30,10 +30,10 @@ public class SysLabelServiceImpl implements SysLabelService {
 
 
     @Resource
-    private SysLabelMapper sysLabelMapper;
+    private SysLabelDao sysLabelDao;
 
     @Override
     public List<SysLabel> findAll() {
-        return sysLabelMapper.selectAll();
+        return sysLabelDao.selectAll();
     }
 }

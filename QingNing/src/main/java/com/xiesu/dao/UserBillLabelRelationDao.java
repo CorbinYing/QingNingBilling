@@ -11,25 +11,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xiesu.dto.label;
-
-import com.xiesu.domain.UserLabel;
-import java.util.List;
-import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+package com.xiesu.dao;
 
 /**
- * @author xiesu created on 2023/3/25 21:33
+ * 用户账单标签关联中间表Mapper
+ *
+ * @author xiesu
  */
-@Mapper
-public interface UserLabelMapping {
-
-    UserLabelMapping INSTANCE = Mappers.getMapper(UserLabelMapping.class);
-
-
-    UserLabelDTO convert(UserLabel userLabel);
-
-    List<UserLabelDTO> convert(List<UserLabel> userLabelList);
-
+public interface UserBillLabelRelationDao {
 
 }

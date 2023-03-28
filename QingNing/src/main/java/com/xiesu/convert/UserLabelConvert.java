@@ -14,6 +14,7 @@
 package com.xiesu.convert;
 
 import com.xiesu.domain.UserLabel;
+import com.xiesu.dto.label.UserLabelDTO;
 import com.xiesu.vo.label.UserLabelVO;
 import java.util.List;
 import org.mapstruct.Mapper;
@@ -28,9 +29,12 @@ public interface UserLabelConvert {
     UserLabelConvert INSTANCE = Mappers.getMapper(UserLabelConvert.class);
 
 
-    UserLabelVO convert(UserLabel userLabel);
+    UserLabelVO convert2UserLabelVO(UserLabel userLabel);
 
-    List<UserLabelVO> convert(List<UserLabel> userLabelList);
+    List<UserLabelVO> convert2UserLabelVO(List<UserLabel> userLabelList);
 
+    UserLabelDTO convert2UserLabelDTO(UserLabel userLabel);
+
+    List<UserLabelDTO> convert2UserLabelDTO(List<UserLabel> userLabelList);
 
 }

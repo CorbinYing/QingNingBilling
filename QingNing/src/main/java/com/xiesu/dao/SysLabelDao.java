@@ -11,13 +11,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xiesu.mapper;
+package com.xiesu.dao;
+
+import com.xiesu.domain.SysLabel;
+import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
- * 用户账单mapper
+ * 系统标签表Mapper
  *
  * @author xiesu
  */
-public interface UserBillMapper {
+@Mapper
+public interface SysLabelDao {
+
+    /**
+     * 查询所有的系统标签
+     *
+     * @return List<SysLabel> nonnull but maybe empty
+     */
+    List<SysLabel> selectAll();
+
+    /**
+     * 查询指定系统标签
+     *
+     * @param labelId 标签唯一标识
+     * @return unique SysLabel or null
+     */
+    SysLabel selectByLabelId(@Param("labelId") Long labelId);
 
 }

@@ -11,13 +11,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xiesu.mapper;
+package com.xiesu.controller.bill.param;
+
+import jakarta.validation.constraints.NotBlank;
+import java.io.Serializable;
+import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
- * 用户标签Mapper
- *
- * @author xiesu
+ * @author xiesu created on 2023/3/28 22:50
  */
-public interface UserLabelMapper {
+@Getter
+@Setter
+public class DelBillBatchParam implements Serializable {
+
+    /**
+     * 待删除账单id
+     */
+    @NotBlank(message = "待删除账单id不能为空")
+    private List<Long> billIdList;
 
 }

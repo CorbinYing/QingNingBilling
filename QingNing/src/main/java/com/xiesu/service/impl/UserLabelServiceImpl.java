@@ -13,7 +13,14 @@
  */
 package com.xiesu.service.impl;
 
+import com.google.common.base.Preconditions;
+import com.xiesu.dao.UserLabelDao;
+import com.xiesu.domain.UserLabel;
 import com.xiesu.service.UserLabelService;
+import jakarta.annotation.Resource;
+import java.util.List;
+import java.util.Optional;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 /**
@@ -22,18 +29,28 @@ import org.springframework.stereotype.Service;
  * @author xiesu created on 2023/3/20 09:15
  */
 @Service
-public class UserLabelServiceImpl {
+public class UserLabelServiceImpl implements UserLabelService {
 
-    //@Override
-    //public List<UserLabel> findByAccountId(String accountId) {
-    //    return null;
-    //}
-    //
-    //@Override
-    //public Optional<UserLabel> findByAccountId(Long labelId) {
-    //
-    //    return null;
-    //}
+    @Resource
+    private UserLabelDao userLabelDao;
 
+    @Override
+    public List<UserLabel> findByAccountId(String accountId) {
+        Preconditions.checkArgument(StringUtils.isNotBlank(accountId), "账户id不能为空");
 
+        return userLabelDao.selectByAccountId(accountId);
+    }
+
+    @Override
+    public Optional<UserLabel> findByLabelId(Long labelId) {
+        Preconditions.checkArgument(labelId != null, "标签id不能为空");
+        UserLabel label = userLabelDao.selectByLabelId(labelId);
+        return Optional.ofNullable(label);
+    }
+
+    @Override
+    public void deleteByLabelId(Long labelId) {
+        Preconditions.checkArgument(labelId != null, "标签id不能为空");
+        userLabelDao.deleteByLabelId(labelId);
+    }
 }

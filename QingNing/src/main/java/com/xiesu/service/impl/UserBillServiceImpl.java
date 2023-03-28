@@ -15,6 +15,7 @@ package com.xiesu.service.impl;
 
 import com.xiesu.dto.bill.UserBillDTO;
 import com.xiesu.service.UserBillService;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 /**
@@ -28,5 +29,15 @@ public class UserBillServiceImpl implements UserBillService {
     @Override
     public UserBillDTO addOneBill(UserBillDTO addBillDto) {
         return null;
+    }
+
+    @Override
+    public void deleteBatch(List<Long> deleteBillIdList) {
+
+    }
+
+    @Override
+    public void deleteOne(Long deleteBillId) {
+
     }
 }

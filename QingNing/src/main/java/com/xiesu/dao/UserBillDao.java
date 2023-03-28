@@ -11,13 +11,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xiesu.mapper;
+package com.xiesu.dao;
 
 /**
- * 用户账单标签关联中间表Mapper
+ * 用户账单mapper
  *
  * @author xiesu
  */
-public interface UserBillLabelRelationMapper {
+public interface UserBillDao {
 
 }

@@ -11,7 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xiesu.mapper;
+package com.xiesu.dao;
 
 import com.xiesu.domain.UserAccount;
 
@@ -20,7 +20,7 @@ import com.xiesu.domain.UserAccount;
  *
  * @author xiesu
  */
-public interface UserAccountMapper {
+public interface UserAccountDao {
 
     UserAccount insertOne(UserAccount account);
 

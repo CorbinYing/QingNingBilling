@@ -16,6 +16,7 @@ package com.xiesu.controller.bill;
 import com.xiesu.common.response.AbstractResponse;
 import com.xiesu.controller.AbstractBaseController;
 import com.xiesu.controller.bill.param.AddBillParam;
+import com.xiesu.controller.bill.param.DelBillBatchParam;
 import com.xiesu.convert.UserBillConvert;
 import com.xiesu.dto.bill.UserBillDTO;
 import com.xiesu.service.UserBillService;
@@ -57,9 +58,16 @@ public class UserBillOperateController extends AbstractBaseController {
     /**
      * 批量删除账单信息
      */
-    @DeleteMapping("/delete-list")
-    public AbstractResponse deleteList(@RequestParam("") List<Long> billIdList) {
+    @PostMapping("/delete-batch")
+    public AbstractResponse deleteBatch(@RequestBody @Validated DelBillBatchParam billBatchParam) {
         //        TODO: 批量删除不能直接拼接URL
+        return null;
+    }
+
+
+    @DeleteMapping("/delete-one")
+    public AbstractResponse deleteOne(@RequestParam("billId") Long deleteBillId) {
+
         return null;
     }
 
