@@ -47,6 +47,12 @@ public interface UserLabelService {
      *
      * @param labelId 标签id
      */
-    void deleteByLabelId(Long labelId);
+    void softDeleteByLabelId(Long labelId);
 
+    /**
+     * 批量软删除用户标签
+     *
+     * @param lableIdList 标签id list
+     */
+    void softDeleteBatchByLabelId(List<Long> lableIdList);
 }

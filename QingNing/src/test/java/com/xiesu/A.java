@@ -11,31 +11,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xiesu.dao;
-
-import java.util.List;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+package com.xiesu;
 
 /**
- * 用户账单mapper
- *
- * @author xiesu
+ * @author xiesu created on 2023/3/29 17:14
  */
-@Mapper
-public interface UserBillDao {
+public class A {
 
-    /**
-     * 删除指定账单
-     *
-     * @param billId 账单id
-     */
-    void deleteByBillId(@Param("billId") Long billId);
+    public static void main(String[] args) {
+        for (int i = 0; i < 10; i++) {
+            System.out.println(i);
+            System.out.println(10);
+        }
+    }
 
-    /**
-     * 批量删除账单
-     *
-     * @param billIdList 账单idList
-     */
-    void deleteBatchByBillId(@Param("billIdList") List<Long> billIdList);
 }

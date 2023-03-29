@@ -25,5 +25,20 @@
 
     <result property="deleteFlag" column="delete_flag"/>
   </resultMap>
+  <delete id="deleteByBillId">
+    delete
+    from user_bill_relation as r
+    where r.bill_label_id = (select b.bill_label_id from user_bill as b where b.bill_id = #{billId})
+  </delete>
+
+  <delete id="deleteBatchByBillId">
+    delete
+    from user_bill_relation as r
+    where r.bill_label_id = (select b.bill_label_id from user_bill as b where b.bill_id in
+    <foreach collection="billIdList" item="item" separator="," open="(" close=")" nullable="false">
+      #{item}
+    </foreach>
+    )
+  </delete>
 
 </mapper>

@@ -41,9 +41,18 @@
 
   </select>
 
-  <delete id="deleteByLabelId">
-    delete
-    from user_label as l
+  <delete id="softDeleteByLabelId">
+    update user_label as l
+    set l.delete_flag= true
     where l.label_id = #{labelId}
   </delete>
+
+
+  <update id="softDeleteBatchByLabelId">
+    update user_label as l
+    set l.delete_flag=true where l.label_id in
+    <foreach collection="labelIdList" open="(" close=")" separator="," item="item">
+      #{item}
+    </foreach>
+  </update>
 </mapper>

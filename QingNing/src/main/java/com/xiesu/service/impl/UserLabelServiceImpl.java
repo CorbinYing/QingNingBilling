@@ -13,15 +13,19 @@
  */
 package com.xiesu.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.google.common.base.Preconditions;
 import com.xiesu.dao.UserLabelDao;
 import com.xiesu.domain.UserLabel;
 import com.xiesu.service.UserLabelService;
 import jakarta.annotation.Resource;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 /**
  * 用户自定义标签service
@@ -49,8 +53,22 @@ public class UserLabelServiceImpl implements UserLabelService {
     }
 
     @Override
-    public void deleteByLabelId(Long labelId) {
+    @Transactional(rollbackFor = Exception.class)
+    public void softDeleteByLabelId(Long labelId) {
         Preconditions.checkArgument(labelId != null, "标签id不能为空");
-        userLabelDao.deleteByLabelId(labelId);
+        userLabelDao.softDeleteByLabelId(labelId);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void softDeleteBatchByLabelId(List<Long> labelIdList) {
+        Preconditions.checkArgument(CollectionUtil.isNotEmpty(labelIdList), "标签id不能为空");
+
+        for (int begin = 0, end; begin < labelIdList.size(); begin = end + 1) {
+            end = Math.min(500, labelIdList.size()) - 1;
+            List<Long> list = labelIdList.subList(begin, end);
+            userLabelDao.softDeleteBatchByLabelId(list);
+        }
+
     }
 }

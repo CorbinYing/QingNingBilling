@@ -42,10 +42,17 @@ public interface UserLabelDao {
 
 
     /**
-     * 删除指定labelId 的用户标签
+     * 软删除指定labelId 的用户标签
      *
      * @param labelId 用户标签
      */
-    void deleteByLabelId(@Param("labelId") Long labelId);
+    void softDeleteByLabelId(@Param("labelId") Long labelId);
+
+    /**
+     * 批量软删除用户标签
+     *
+     * @param labelIdList 用户标签id list
+     */
+    void softDeleteBatchByLabelId(@Param("labelIdList") List<Long> labelIdList);
 
 }

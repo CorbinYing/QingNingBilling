@@ -11,32 +11,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xiesu.dao;
+package com.xiesu.controller.label.param;
 
+import jakarta.validation.constraints.NotBlank;
+import java.io.Serializable;
 import java.util.List;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
- * 用户账单标签关联中间表Mapper
- *
- * @author xiesu
+ * @author xiesu created on 2023/3/29 15:56
  */
-@Mapper
-public interface UserBillLabelRelationDao {
+@Getter
+@Setter
+public class DelLabelBatchParam implements Serializable {
 
     /**
-     * 删除账单关联的标签-账单中间表数据
-     *
-     * @param billId 账单id
+     * 待删除标签id
      */
-    void deleteByBillId(@Param("billId") Long billId);
+    @NotBlank(message = "待删除标签id不能为空")
+    private List<Long> labelIdList;
 
-    /**
-     * 批量删除账单关联的标签-账单中间表数据
-     *
-     * @param billIdList 账单id List
-     */
-    void deleteBatchByBillId(@Param("billIdList") List<Long> billIdList);
 
 }

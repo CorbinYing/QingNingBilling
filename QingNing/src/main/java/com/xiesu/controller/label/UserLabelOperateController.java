@@ -17,16 +17,22 @@ import com.xiesu.common.response.AbstractResponse;
 import com.xiesu.common.response.ErrResponseResult;
 import com.xiesu.common.response.OkResponseResult;
 import com.xiesu.controller.AbstractBaseController;
+import com.xiesu.controller.label.param.DelLabelBatchParam;
 import com.xiesu.vo.label.UserLabelVO;
 import com.xiesu.convert.UserLabelConvert;
 import com.xiesu.domain.UserLabel;
 import com.xiesu.service.UserLabelService;
 import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.util.LambdaUtil;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,7 +57,7 @@ public class UserLabelOperateController extends AbstractBaseController {
     public List<UserLabelVO> queryUserLabelList() {
         String acid = getCurrentUser();
         List<UserLabel> labelList = userLabelService.findByAccountId(acid);
-        return UserLabelConvert.INSTANCE.convert(labelList);
+        return UserLabelConvert.INSTANCE.convert2UserLabelVO(labelList);
     }
 
 
@@ -76,6 +82,21 @@ public class UserLabelOperateController extends AbstractBaseController {
                 .build();
     }
 
+
+    /**
+     * 批量删除用户标签，历史记账等信息标签不受影响
+     *
+     * @param labelBatchParam 标签id集合
+     */
+    @PostMapping("/delete-batch")
+    public AbstractResponse deleteBatchUserLabel(
+            @RequestBody @Valid DelLabelBatchParam labelBatchParam) {
+        List<Long> labelIdList = labelBatchParam.getLabelIdList();
+        userLabelService.softDeleteBatchByLabelId(labelIdList);
+        return OkResponseResult.success().build();
+    }
+
+
     /**
      * 删除用户一个标签，历史记账等信息标签不受影响
      *
@@ -83,8 +104,8 @@ public class UserLabelOperateController extends AbstractBaseController {
      */
     @DeleteMapping("/delete-one")
     public AbstractResponse deleteOneUserLabel(@RequestParam("labelId") Long labelId) {
-        userLabelService.deleteByLabelId(labelId);
-        return OkResponseResult.success("succeed");
+        userLabelService.softDeleteByLabelId(labelId);
+        return OkResponseResult.success().build();
     }
 
 }

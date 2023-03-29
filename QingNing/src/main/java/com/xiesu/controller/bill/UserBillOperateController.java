@@ -14,6 +14,7 @@
 package com.xiesu.controller.bill;
 
 import com.xiesu.common.response.AbstractResponse;
+import com.xiesu.common.response.OkResponseResult;
 import com.xiesu.controller.AbstractBaseController;
 import com.xiesu.controller.bill.param.AddBillParam;
 import com.xiesu.controller.bill.param.DelBillBatchParam;
@@ -22,8 +23,7 @@ import com.xiesu.dto.bill.UserBillDTO;
 import com.xiesu.service.UserBillService;
 import com.xiesu.vo.bill.UserBillVO;
 import jakarta.annotation.Resource;
-import java.util.List;
-import org.springframework.validation.annotation.Validated;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,7 +47,7 @@ public class UserBillOperateController extends AbstractBaseController {
      * 添加账单记录，成功后返回该记录信息
      */
     @PostMapping("/add-one")
-    public UserBillVO insertOne(@RequestBody @Validated AddBillParam billParam) {
+    public UserBillVO insertOne(@RequestBody @Valid AddBillParam billParam) {
 
         UserBillDTO addBillDto = UserBillConvert.INSTANCE.convert(billParam);
         UserBillDTO billDTO = userBillService.addOneBill(addBillDto);
@@ -59,16 +59,16 @@ public class UserBillOperateController extends AbstractBaseController {
      * 批量删除账单信息
      */
     @PostMapping("/delete-batch")
-    public AbstractResponse deleteBatch(@RequestBody @Validated DelBillBatchParam billBatchParam) {
-        //        TODO: 批量删除不能直接拼接URL
+    public AbstractResponse deleteBatch(@RequestBody @Valid DelBillBatchParam billBatchParam) {
+
         return null;
     }
 
 
     @DeleteMapping("/delete-one")
     public AbstractResponse deleteOne(@RequestParam("billId") Long deleteBillId) {
-
-        return null;
+        userBillService.deleteOne(deleteBillId);
+        return OkResponseResult.success().build();
     }
 
 

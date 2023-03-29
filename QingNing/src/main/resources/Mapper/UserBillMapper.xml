@@ -25,5 +25,18 @@
     <result property="gmtBill" column="gmt_bill"/>
     <result property="billLabelId" column="bill_label_id"/>
   </resultMap>
+  <delete id="deleteByBillId">
+    delete
+    from user_bill as b
+    where b.bill_id = #{billId}
+  </delete>
+  <delete id="deleteBatchByBillId">
+    delete
+    from user_bill as b
+    where b.bill_id in
+    <foreach collection="billIdList" nullable="false" open="(" close=")" separator="," item="item">
+      #{item}
+    </foreach>
+  </delete>
 
 </mapper>
