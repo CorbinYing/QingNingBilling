@@ -15,6 +15,7 @@ package com.xiesu.dao;
 
 import com.xiesu.domain.UserLabel;
 import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -22,6 +23,7 @@ import org.apache.ibatis.annotations.Param;
  *
  * @author xiesu
  */
+@Mapper
 public interface UserLabelDao {
 
     /**

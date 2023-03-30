@@ -14,12 +14,14 @@
 package com.xiesu.dao;
 
 import com.xiesu.domain.UserAccount;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 用户账户Mapper
  *
  * @author xiesu
  */
+@Mapper
 public interface UserAccountDao {
 
     UserAccount insertOne(UserAccount account);

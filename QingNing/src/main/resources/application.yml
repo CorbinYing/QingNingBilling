@@ -33,5 +33,7 @@ spring:
           merge-sql: false                                  # 合并多个连接池的监控数据，默认false
 mybatis:
   mapper-locations: classpath:/Mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 #debug: true

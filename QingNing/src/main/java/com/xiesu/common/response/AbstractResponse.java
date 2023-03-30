@@ -51,7 +51,10 @@ public abstract class AbstractResponse implements Serializable {
      * 返回一个不允许修改的只读map，不允许直接操作封装map
      */
     public final Map<?, ?> getImmutableResult() {
-        return Map.copyOf(ObjectsUtil.orElse(responseMap, Collections.EMPTY_MAP));
+        //返回一个不可变的Map，底层仍然可变
+        return Collections.unmodifiableMap(ObjectsUtil.orElse(responseMap, Collections.EMPTY_MAP));
+        //这张写法会打乱原map 内容顺序
+        //return Map.copyOf(ObjectsUtil.orElse(responseMap, Collections.EMPTY_MAP));
     }
 
 

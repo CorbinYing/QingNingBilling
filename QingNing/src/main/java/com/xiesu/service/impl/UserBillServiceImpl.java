@@ -50,7 +50,7 @@ public class UserBillServiceImpl implements UserBillService {
         //删除账单-标签中间表信息
         userBillLabelRelationDao.deleteBatchByBillId(deleteBillIdList);
         //删除账单信息
-        userBillDao.
+        //userBillDao.
 
 
     }
