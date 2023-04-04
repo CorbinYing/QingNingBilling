@@ -24,6 +24,7 @@ import com.xiesu.service.UserBillService;
 import com.xiesu.vo.bill.UserBillVO;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import java.util.List;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,9 +50,12 @@ public class UserBillOperateController extends AbstractBaseController {
     @PostMapping("/add-one")
     public UserBillVO insertOne(@RequestBody @Valid AddBillParam billParam) {
 
-        UserBillDTO addBillDto = UserBillConvert.INSTANCE.convert(billParam);
-        UserBillDTO billDTO = userBillService.addOneBill(addBillDto);
-        return UserBillConvert.INSTANCE.convert(billDTO);
+        UserBillDTO addBillDto = UserBillConvert.INSTANCE.convert2UserBillDTO(billParam);
+
+        Long billId = userBillService.addOneBill(addBillDto);
+        UserBillDTO billDTO = userBillService.findOne(billId);
+
+        return UserBillConvert.INSTANCE.convert2UserBillVO(billDTO);
     }
 
 
@@ -60,14 +64,24 @@ public class UserBillOperateController extends AbstractBaseController {
      */
     @PostMapping("/delete-batch")
     public AbstractResponse deleteBatch(@RequestBody @Valid DelBillBatchParam billBatchParam) {
-
-        return null;
+        List<Long> deleteBillIdList = billBatchParam.getBillIdList();
+        userBillService.deleteBatch(deleteBillIdList);
+        return OkResponseResult.success().build();
     }
 
-
+    /**
+     * 删除账单信息
+     *
+     * @param deleteBillId 待删除账单id
+     */
     @DeleteMapping("/delete-one")
     public AbstractResponse deleteOne(@RequestParam("billId") Long deleteBillId) {
         userBillService.deleteOne(deleteBillId);
+        return OkResponseResult.success().build();
+    }
+
+
+    public AbstractResponse queryList() {
         return OkResponseResult.success().build();
     }
 

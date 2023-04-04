@@ -48,5 +48,19 @@ URI路径: Twitter，百度，知乎 <br>
 }
 ```
 
+## 数据安全性
+
+## 接口安全性
+
+<hr>
+通过请求签名来防止模拟请求、篡改请求
+
+## 方法命名规范
+
+dao层查询方法selectXXXX
+service层查询方法 findXXX
+controller层查询方法 queryXXXX
+
+
 
 

@@ -40,6 +40,13 @@
     where l.label_id = #{labelId}
 
   </select>
+  <select id="selectByBillLabelId" resultMap="baseResult">
+    select l.*
+    from user_label as l,
+         user_bill_relation as r
+    where r.bill_label_id = #{billLabelId}
+      and r.label_id = l.label_id
+  </select>
 
   <delete id="softDeleteByLabelId">
     update user_label as l

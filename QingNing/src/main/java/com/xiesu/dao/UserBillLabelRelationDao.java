@@ -13,6 +13,8 @@
  */
 package com.xiesu.dao;
 
+import com.xiesu.domain.UserBillLabelRelation;
+import com.xiesu.dto.bill.UserBillLabelRelationDTO;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -38,5 +40,8 @@ public interface UserBillLabelRelationDao {
      * @param billIdList 账单id List
      */
     void deleteBatchByBillId(@Param("billIdList") List<Long> billIdList);
+
+
+    void insertBatch(@Param("relationList") List<UserBillLabelRelation> relationList);
 
 }

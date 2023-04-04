@@ -17,6 +17,7 @@ import com.xiesu.domain.UserLabel;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * 用户标签Mapper
@@ -42,6 +43,14 @@ public interface UserLabelDao {
      */
     UserLabel selectByLabelId(@Param("labelId") Long labelId);
 
+    /**
+     * 查询账单关联的标签信息
+     *
+     * @param billLabelId 账单关联中间表 关联字段
+     * @return List<UserLabel>
+     */
+    List<UserLabel> selectByBillLabelId(@Param("billLabelId") Long billLabelId);
+
 
     /**
      * 软删除指定labelId 的用户标签
@@ -49,6 +58,7 @@ public interface UserLabelDao {
      * @param labelId 用户标签
      */
     void softDeleteByLabelId(@Param("labelId") Long labelId);
+
 
     /**
      * 批量软删除用户标签

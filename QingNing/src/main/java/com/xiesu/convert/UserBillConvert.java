@@ -14,6 +14,7 @@
 package com.xiesu.convert;
 
 import com.xiesu.controller.bill.param.AddBillParam;
+import com.xiesu.domain.UserBill;
 import com.xiesu.dto.bill.UserBillDTO;
 import com.xiesu.vo.bill.UserBillVO;
 import org.mapstruct.Mapper;
@@ -27,8 +28,12 @@ public interface UserBillConvert {
 
     UserBillConvert INSTANCE = Mappers.getMapper(UserBillConvert.class);
 
-    UserBillDTO convert(AddBillParam billParam);
+    UserBillDTO convert2UserBillDTO(AddBillParam billParam);
 
-    UserBillVO convert(UserBillDTO billDTO);
+    UserBillDTO convert2UserBillDTO(UserBill userBill);
+
+    UserBillVO convert2UserBillVO(UserBillDTO billDTO);
+
+    UserBill convert2UserBill(UserBillDTO userBillDTO);
 
 }

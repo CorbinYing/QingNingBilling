@@ -33,9 +33,9 @@ import org.springframework.stereotype.Component;
  *
  * @author xiesu created on 2023/3/30 10:32
  */
-@Component
-@Intercepts({@Signature(type = StatementHandler.class, method = "prepare", args = {Connection.class,
-        Integer.class})})
+//@Component
+//@Intercepts({@Signature(type = StatementHandler.class, method = "prepare", args = {Connection.class,
+//        Integer.class})})
 public class AuthcPlugin implements Interceptor {
 
     @Override

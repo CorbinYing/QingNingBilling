@@ -17,6 +17,15 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xiesu.dao.UserBillLabelRelationDao">
+  <insert id="insertBatch">
+    insert into user_bill_relation (bill_label_id, label_id, gmt_create)
+    values
+    <foreach collection="relationList" separator="," nullable="false" item="relation">
+      (#{relation.billLabelId}, #{relation.labelId}, #{relation.createTime})
+    </foreach>
+
+  </insert>
+
   <resultMap id="baseResult" type="com.xiesu.domain.UserBillLabelRelation"
     extends="com.xiesu.dao.AbstractEntityDao.AbstractResult">
 
@@ -25,6 +34,8 @@
 
     <result property="deleteFlag" column="delete_flag"/>
   </resultMap>
+
+
   <delete id="deleteByBillId">
     delete
     from user_bill_relation as r

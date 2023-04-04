@@ -13,6 +13,7 @@
  */
 package com.xiesu.dao;
 
+import com.xiesu.domain.UserBill;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -38,4 +39,13 @@ public interface UserBillDao {
      * @param billIdList 账单idList
      */
     void deleteBatchByBillId(@Param("billIdList") List<Long> billIdList);
+
+    /**
+     * 添加账单
+     *
+     * @param bill 账单
+     */
+    void insertOne(@Param("bill") UserBill bill);
+
+    UserBill selectOneByBillId(@Param("billId") Long billId);
 }

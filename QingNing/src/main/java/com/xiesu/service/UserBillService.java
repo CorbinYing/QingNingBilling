@@ -13,6 +13,7 @@
  */
 package com.xiesu.service;
 
+import com.xiesu.domain.UserBill;
 import com.xiesu.dto.bill.UserBillDTO;
 import java.util.List;
 
@@ -27,9 +28,9 @@ public interface UserBillService {
      * 新增一个用户账单，并返回持久化后的信息
      *
      * @param addBillDto 账单信息
-     * @return 持久化的账单信息
+     * @return billId  账单唯一索引
      */
-    UserBillDTO addOneBill(UserBillDTO addBillDto);
+    Long addOneBill(UserBillDTO addBillDto);
 
     /**
      * 批量删除账单信息(同步删除标签-账单中间表信息)
@@ -44,5 +45,13 @@ public interface UserBillService {
      * @param deleteBillId 带删除账单id
      */
     void deleteOne(Long deleteBillId);
+
+    /**
+     * 查询指定账单信息
+     *
+     * @param billId 账单id
+     * @return userBillDto
+     */
+    UserBillDTO findOne(Long billId);
 
 }
