@@ -24,6 +24,8 @@
     <result property="accountId" column="account_id"/>
     <result property="gmtBill" column="gmt_bill"/>
     <result property="billLabelId" column="bill_label_id"/>
+    <result property="money" column="money"/>
+    <result property="remark" column="remark"/>
   </resultMap>
   <insert id="insertOne">
     insert into user_bill (bill_id, account_id, gmt_bill, bill_label_id, gmt_create)
@@ -45,11 +47,43 @@
       #{item}
     </foreach>
   </delete>
+
+
   <select id="selectOneByBillId" resultMap="baseResult">
     select b.*
     from user_bill as b
     where b.bill_id = #{billId}
 
   </select>
+
+
+  <resultMap id="userBillDTOMap" type="com.xiesu.dto.bill.UserBillDTO">
+    <id property="id" column="id"/>
+    <result property="version" column="version"/>
+    <result property="createTime" column="gmt_create"/>
+    <result property="updateTime" column="gmt_update"/>
+
+    <result property="billId" column="bill_id"/>
+    <result property="accountId" column="account_id"/>
+    <result property="gmtBill" column="gmt_bill"/>
+    <result property="billLabelId" column="bill_label_id"/>
+    <result property="money" column="money"/>
+    <result property="remark" column="remark"/>
+
+    <collection property="labelList" ofType="com.xiesu.domain.UserLabel"
+      fetchType="lazy" select="com.xiesu.dao.UserLabelDao.selectByBillLabelId"
+      column="billLabelId"
+      javaType="java.util.List">
+    </collection>
+  </resultMap>
+
+  <select id="selectListByAccountId" resultMap="userBillDTOMap">
+
+    select b.*
+    from user_bill as b
+    where b.account_id = #{accountId}
+    order by b.gmt_bill desc
+  </select>
+
 
 </mapper>

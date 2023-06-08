@@ -11,7 +11,7 @@
   <packaging>pom</packaging>
 
   <modules>
-    <module>Auth</module>
+    <!--    <module>Auth</module>-->
     <module>QingNing</module>
     <module>LeafId</module>
   </modules>
@@ -24,10 +24,11 @@
     <lombok.version>1.18.24</lombok.version>
     <hutool.version>5.8.16</hutool.version>
     <curator.version>2.6.0</curator.version>
+    <pagehelper.version>1.4.6</pagehelper.version>
     <commons-io.version>2.11.0</commons-io.version>
-    <spring-boot.version>3.0.2</spring-boot.version>
+    <spring-boot.version>2.7.1</spring-boot.version>
     <project.version>0.0.1-SNAPSHOT</project.version>
-    <spring-cloud.version>2022.0.1</spring-cloud.version>
+    <spring-cloud.version>2021.0.6</spring-cloud.version>
     <org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
     <mysql-connector-java.version>8.0.32</mysql-connector-java.version>
     <druid-spring-boot-starter.version>1.2.16</druid-spring-boot-starter.version>
@@ -68,6 +69,13 @@
         <version>${mybatis-spring-boot-starter.version}</version>
       </dependency>
 
+      <!--pagehelper-->
+      <dependency>
+        <groupId>com.github.pagehelper</groupId>
+        <artifactId>pagehelper-spring-boot-starter</artifactId>
+        <version>${pagehelper.version}</version>
+      </dependency>
+
       <!--      druid-->
       <dependency>
         <groupId>com.alibaba</groupId>
@@ -92,6 +100,12 @@
             <artifactId>spring-boot-starter-tomcat</artifactId>
           </exclusion>
         </exclusions>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-undertow</artifactId>
+        <version>${spring-boot.version}</version>
       </dependency>
       <!--      <dependency>-->
       <!--        <groupId>org.apache.curator</groupId>-->
@@ -139,17 +153,19 @@
         <version>${org.mapstruct.version}</version>
       </dependency>
 
-      <dependency>
-        <groupId>org.springframework.security</groupId>
-        <artifactId>spring-security-oauth2-authorization-server</artifactId>
-        <version>${oauth2-authorization-server.version}</version>
-      </dependency>
-
       <!--      <dependency>-->
       <!--        <groupId>org.springframework.security</groupId>-->
       <!--        <artifactId>spring-security-oauth2-authorization-server</artifactId>-->
       <!--        <version>${oauth2-authorization-server.version}</version>-->
       <!--      </dependency>-->
+
+      <!-- https://mvnrepository.com/artifact/org.apache.shiro/shiro-spring-boot-starter -->
+      <dependency>
+        <groupId>org.apache.shiro</groupId>
+        <artifactId>shiro-spring-boot-starter</artifactId>
+        <version>1.11.0</version>
+      </dependency>
+
 
     </dependencies>
 

@@ -14,6 +14,7 @@
 package com.xiesu.dao;
 
 import com.xiesu.domain.UserBill;
+import com.xiesu.dto.bill.UserBillDTO;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -48,4 +49,7 @@ public interface UserBillDao {
     void insertOne(@Param("bill") UserBill bill);
 
     UserBill selectOneByBillId(@Param("billId") Long billId);
+
+
+    List<UserBillDTO> selectListByAccountId(@Param("accountId") String accountId);
 }

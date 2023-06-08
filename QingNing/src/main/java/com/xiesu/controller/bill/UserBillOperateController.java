@@ -13,19 +13,23 @@
  */
 package com.xiesu.controller.bill;
 
-import com.xiesu.common.response.AbstractResponse;
+import com.github.pagehelper.PageInfo;
 import com.xiesu.common.response.OkResponseResult;
+import com.xiesu.common.response.ResponseBuildUtil;
+import com.xiesu.common.response.ResponseResult;
 import com.xiesu.controller.AbstractBaseController;
 import com.xiesu.controller.bill.param.AddBillParam;
 import com.xiesu.controller.bill.param.DelBillBatchParam;
+import com.xiesu.controller.bill.param.QueryBillPageParam;
 import com.xiesu.convert.UserBillConvert;
 import com.xiesu.dto.bill.UserBillDTO;
 import com.xiesu.service.UserBillService;
 import com.xiesu.vo.bill.UserBillVO;
-import jakarta.annotation.Resource;
-import jakarta.validation.Valid;
 import java.util.List;
+import javax.annotation.Resource;
+import javax.validation.Valid;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,10 +67,10 @@ public class UserBillOperateController extends AbstractBaseController {
      * 批量删除账单信息
      */
     @PostMapping("/delete-batch")
-    public AbstractResponse deleteBatch(@RequestBody @Valid DelBillBatchParam billBatchParam) {
+    public ResponseResult deleteBatch(@RequestBody @Valid DelBillBatchParam billBatchParam) {
         List<Long> deleteBillIdList = billBatchParam.getBillIdList();
         userBillService.deleteBatch(deleteBillIdList);
-        return OkResponseResult.success().build();
+        return ResponseBuildUtil.success().build();
     }
 
     /**
@@ -75,14 +79,22 @@ public class UserBillOperateController extends AbstractBaseController {
      * @param deleteBillId 待删除账单id
      */
     @DeleteMapping("/delete-one")
-    public AbstractResponse deleteOne(@RequestParam("billId") Long deleteBillId) {
+    public ResponseResult deleteOne(@RequestParam("billId") Long deleteBillId) {
         userBillService.deleteOne(deleteBillId);
-        return OkResponseResult.success().build();
+        return ResponseBuildUtil.success().build();
     }
 
+    /**
+     * 分页查询当前用户的账单信息
+     *
+     * @param pageParam 分页参数
+     */
+    @GetMapping("/query-user-bill-page")
+    public ResponseResult queryList(@RequestBody @Valid QueryBillPageParam pageParam) {
 
-    public AbstractResponse queryList() {
-        return OkResponseResult.success().build();
+        PageInfo<UserBillDTO> pageInfo = userBillService.findListByAccountId(pageParam);
+
+        return ResponseBuildUtil.success(pageInfo);
     }
 
 

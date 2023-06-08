@@ -13,12 +13,6 @@
  */
 package com.xiesu.common.response;
 
-import java.util.LinkedHashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
-import org.springframework.context.i18n.LocaleContextHolder;
-
 
 /**
  * Action: 正常情况下构建统一返回结果
@@ -27,78 +21,23 @@ import org.springframework.context.i18n.LocaleContextHolder;
  *
  * @author xiesu
  */
-public class OkResponseResult extends AbstractResponse {
-
-    private OkResponseResult(Map<Object, Object> data) {
-
-        responseMap.put(ERR_CODE_KEY, ResponseCode.SUCC_0);
-
-        //获取当前线程的local，获取不到使用defaultLocale
-        Locale locale = LocaleContextHolder.getLocale();
-        responseMap.put(ERR_MSG_KEY, ResponseDefaultMsg.getDefaultMsg(ResponseCode.SUCC_0, locale));
-        responseMap.put(RES_RESULT_KEY, data);
-    }
-
-    private OkResponseResult(Object singleResponseResult) {
-        responseMap.put(ERR_CODE_KEY, ResponseCode.SUCC_0);
-
-        //获取当前线程的local，获取不到使用defaultLocale
-        Locale locale = LocaleContextHolder.getLocale();
-        responseMap.put(ERR_MSG_KEY, ResponseDefaultMsg.getDefaultMsg(ResponseCode.SUCC_0, locale));
-        responseMap.put(RES_RESULT_KEY, singleResponseResult);
-    }
-
-    public static OkResponseResult success(Object singleResponseResult) {
-        return new OkResponseResult(singleResponseResult);
-    }
+public class OkResponseResult<T> extends ResponseResult {
 
     /**
-     * 链式构造返回结果
-     *
-     * @return SucResponseBuilder
+     * 返回结果
      */
-    public static SucResponseBuilder success() {
-        return new SucResponseBuilder();
+    private final T result;
+
+    private OkResponseResult(T singleResponseResult) {
+        this.setCode(ResponseCode.SUCC_0);
+        this.result = singleResponseResult;
     }
 
-    public static class SucResponseBuilder {
+    static <T> OkResponseResult<T> success(T singleResponseResult) {
+        return new OkResponseResult<>(singleResponseResult);
+    }
 
-        private SucResponseBuilder() {
-        }
-
-        /**
-         * 存放最终结果的有序
-         */
-        private final Map<Object, Object> data = new LinkedHashMap<>();
-
-        /**
-         * 具体的结果值
-         *
-         * @param key   notnull
-         * @param value nullable
-         */
-        public SucResponseBuilder item(String key, Object value) {
-            data.put(Objects.requireNonNull(key), value);
-            return this;
-        }
-
-        /**
-         * 具体的结果值
-         *
-         * @param map notnull
-         */
-        public <K, V> SucResponseBuilder items(Map<K, V> map) {
-            if (!(map == null || map.isEmpty())) {
-                data.putAll(map);
-            }
-            return this;
-        }
-
-        /**
-         * 构建外部结果类
-         */
-        public OkResponseResult build() {
-            return new OkResponseResult(data);
-        }
+    public T getResult() {
+        return result;
     }
 }

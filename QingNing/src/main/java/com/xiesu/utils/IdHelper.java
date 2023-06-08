@@ -53,7 +53,7 @@ public final class IdHelper {
         /**
          * 分布式id获取连接
          */
-        private static final String SNOW_FLAKE_ID_URL = "http://127.0.0.1:8080/api/snowflake/getList/key";
+        private static final String SNOW_FLAKE_ID_URL = "http://127.0.0.1:7070/api/snowflake/getList/key";
         /**
          * 阻塞有界队列暂存id，形成ID池
          */

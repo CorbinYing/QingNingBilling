@@ -14,6 +14,13 @@
 package com.xiesu.controller.account;
 
 import com.xiesu.controller.AbstractBaseController;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -22,6 +29,28 @@ import org.springframework.web.bind.annotation.RestController;
  * @author xiesu
  */
 @RestController
+@RequestMapping("/login")
 public class UserLoginBaseController extends AbstractBaseController {
 
+
+    /**
+     * 账户、密码登陆
+     *
+     * @param authId        账号
+     * @param pwdCiphertext 密码密文
+     */
+    @PostMapping("/pwd-auth")
+    public boolean loginByPwd(@RequestParam("auth-id") String authId,
+            @RequestParam("pwd-ciphertext") String pwdCiphertext) {
+
+        String accountId = authId;
+        String pwd = pwdCiphertext;
+
+        AuthenticationToken token = new UsernamePasswordToken(accountId, pwd);
+        Subject subject = SecurityUtils.getSubject();
+        subject.login(token);
+
+        return true;
+
+    }
 }

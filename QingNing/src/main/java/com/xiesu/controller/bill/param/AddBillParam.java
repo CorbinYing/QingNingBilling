@@ -13,11 +13,11 @@
  */
 package com.xiesu.controller.bill.param;
 
-import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 

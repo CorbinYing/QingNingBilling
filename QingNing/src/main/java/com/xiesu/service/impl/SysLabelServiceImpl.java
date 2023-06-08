@@ -16,8 +16,8 @@ package com.xiesu.service.impl;
 import com.xiesu.domain.SysLabel;
 import com.xiesu.dao.SysLabelDao;
 import com.xiesu.service.SysLabelService;
-import jakarta.annotation.Resource;
 import java.util.List;
+import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 /**

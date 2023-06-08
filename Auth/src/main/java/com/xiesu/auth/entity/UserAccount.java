@@ -15,6 +15,7 @@ package com.xiesu.auth.entity;
 
 import com.xiesu.auth.constant.ColumnConstant;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Objects;
 import lombok.Getter;
 import lombok.Setter;
@@ -57,6 +58,10 @@ public class UserAccount extends AbstractEntity implements Serializable {
      */
     public boolean isNormal() {
         Objects.requireNonNull(deleteFlag);
+
+        ArrayList<String> list=new ArrayList<>();
+        list.
+
         return ColumnConstant.INIT_DELETE_FLAG.equals(deleteFlag);
     }
 

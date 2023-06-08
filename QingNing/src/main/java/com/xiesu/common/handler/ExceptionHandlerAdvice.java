@@ -13,10 +13,12 @@
  */
 package com.xiesu.common.handler;
 
-import com.xiesu.common.except.ExposedException;
-import com.xiesu.common.except.UnExposedException;
-import com.xiesu.common.response.ErrResponseResult;
 import com.xiesu.common.except.AbstractCustomerException;
+import com.xiesu.common.except.ServiceException;
+import com.xiesu.common.response.ErrResponseResult;
+import com.xiesu.common.response.ResponseBuildUtil;
+import com.xiesu.common.response.ResponseResult;
+import java.util.MissingResourceException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -39,10 +41,16 @@ public class ExceptionHandlerAdvice {
     /**
      * 全局处理手动定义的异常 并进行封装
      */
-    @ExceptionHandler(value = {ExposedException.class, UnExposedException.class})
-    public ErrResponseResult handleCustomException(AbstractCustomerException e) {
+    @ExceptionHandler(value = {ServiceException.class, ServiceException.class})
+    public ResponseResult handleServiceException(AbstractCustomerException e) {
         log.error(e.getClass().getName(), e);
-        return ErrResponseResult.failed(e);
+        return ResponseBuildUtil.failed(e);
+    }
+
+    @ExceptionHandler(value = {ServiceException.class, MissingResourceException.class})
+    public ErrResponseResult handleMissingResourceException(MissingResourceException e) {
+        log.error("国际化配置文件无对应errCode", e);
+        return ResponseBuildUtil.failed().code(-1).errMsg("国际化配置文件无对应errCode").build();
     }
 
 
@@ -52,7 +60,7 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler(value = RuntimeException.class)
     public ErrResponseResult handleRuntimeException(RuntimeException e) {
         log.error(e.getClass().getName(), e);
-        return ErrResponseResult.failed(new UnExposedException());
+        return ResponseBuildUtil.failed().code(-1).errMsg("其他异常").build();
     }
 
 

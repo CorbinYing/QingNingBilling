@@ -13,9 +13,9 @@
  */
 package com.xiesu.controller.label.param;
 
-import jakarta.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.List;
+import javax.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 

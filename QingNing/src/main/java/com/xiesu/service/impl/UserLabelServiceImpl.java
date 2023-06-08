@@ -18,14 +18,12 @@ import com.google.common.base.Preconditions;
 import com.xiesu.dao.UserLabelDao;
 import com.xiesu.domain.UserLabel;
 import com.xiesu.service.UserLabelService;
-import jakarta.annotation.Resource;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import javax.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 
 /**
  * 用户自定义标签service

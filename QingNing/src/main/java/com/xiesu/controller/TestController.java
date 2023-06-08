@@ -13,16 +13,17 @@
  */
 package com.xiesu.controller;
 
-import com.xiesu.common.response.AbstractResponse;
+import com.xiesu.common.response.ResponseBuildUtil;
+import com.xiesu.common.response.ResponseResult;
 import com.xiesu.common.response.OkResponseResult;
 import com.xiesu.domain.SysLabel;
 import com.xiesu.service.SysLabelService;
 import com.xiesu.utils.IdHelper;
-import jakarta.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.annotation.Resource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,7 +36,7 @@ public class TestController {
 
 
     @GetMapping("/test")
-    public AbstractResponse test1() {
+    public ResponseResult test1() {
         List<SysLabel> sysLabels = sysLabelService.findAll();
         System.out.println(LocaleContextHolder.getLocale());
         Map<String, String> map = new HashMap<>();
@@ -44,7 +45,7 @@ public class TestController {
         Map<Integer, Integer> map1 = new HashMap<>();
         map1.put(1, 1);
 
-        return OkResponseResult.success()
+        return ResponseBuildUtil.success()
                 .item("sysLabel", sysLabels.get(0))
                 .item("language", LocaleContextHolder.getLocale())
                 .item("name", "zhangsan")

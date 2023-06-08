@@ -14,7 +14,10 @@
 package com.xiesu.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.google.common.base.Preconditions;
+import com.xiesu.common.page.Pageable;
 import com.xiesu.convert.UserBillConvert;
 import com.xiesu.dao.UserBillDao;
 import com.xiesu.dao.UserBillLabelRelationDao;
@@ -25,11 +28,13 @@ import com.xiesu.domain.UserLabel;
 import com.xiesu.dto.bill.UserBillDTO;
 import com.xiesu.service.UserBillService;
 import com.xiesu.utils.IdHelper;
-import jakarta.annotation.Resource;
+import com.xiesu.utils.UserSubjectUtil;
+import com.xiesu.utils.UserSubjectUtil.UserSubject;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 
@@ -118,6 +123,16 @@ public class UserBillServiceImpl implements UserBillService {
         billDTO.setLabelList(labels);
 
         return billDTO;
+    }
 
+
+    @Override
+    public PageInfo<UserBillDTO> findListByAccountId(Pageable pageable) {
+        UserSubject subject = UserSubjectUtil.currentUserSubject();
+
+        PageHelper.startPage(pageable.getPageNum(), pageable.getPageSize());
+        List<UserBillDTO> billDTOList = userBillDao.selectListByAccountId(subject.getAccountId());
+
+        return new PageInfo<>(billDTOList);
     }
 }

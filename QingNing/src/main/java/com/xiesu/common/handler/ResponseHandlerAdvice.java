@@ -15,9 +15,9 @@ package com.xiesu.common.handler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.xiesu.common.except.UnExposedException;
-import com.xiesu.common.response.AbstractResponse;
 import com.xiesu.common.response.OkResponseResult;
+import com.xiesu.common.response.ResponseBuildUtil;
+import com.xiesu.common.response.ResponseResult;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Map;
@@ -93,38 +93,25 @@ public class ResponseHandlerAdvice implements ResponseBodyAdvice<Object> {
      * 对返回结果进行格式化封装
      *
      * @param body object
-     * @return {@link AbstractResponse}
+     * @return {@link ResponseResult}
      */
     private Object formatBody(Object body, MethodParameter returnType,
             ServerHttpResponse response) {
-        if (body instanceof AbstractResponse) {
-            return ((AbstractResponse) body).getImmutableResult();
-        } else if (body instanceof Map) {
-            Type type = returnType.getGenericParameterType();
-            Type[] actualTypeArguments = ((ParameterizedType) type).getActualTypeArguments();
-
-            if (!Object.class.equals(actualTypeArguments[0])) {
-                log.error("设置返回类型为Map时，key必须为Object类型");
-                throw new UnExposedException();
-            }
-            if (!Object.class.equals(actualTypeArguments[1])) {
-                log.error("设置返回类型为Map时，value必须为Object类型");
-                throw new UnExposedException();
-            }
+        if (body instanceof ResponseResult) {
+            return body;
         } else if (body instanceof String) {
             ((ServletServerHttpResponse) response).getServletResponse()
                     .setContentType(MediaType.APPLICATION_JSON_VALUE);
             //String 是直接返回，需要手动转json，不然会报错
             try {
                 return new ObjectMapper().writeValueAsString(
-                        OkResponseResult.success(body).getImmutableResult());
+                        ResponseBuildUtil.success(body));
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             }
         }
         //其他类型则直接构建
-        return OkResponseResult.success(body).getImmutableResult();
-
+        return ResponseBuildUtil.success(body);
     }
 
 }

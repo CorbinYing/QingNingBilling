@@ -13,24 +13,16 @@
  */
 package com.xiesu.controller.bill.param;
 
-
-import java.io.Serializable;
-import java.util.List;
-import javax.validation.constraints.NotBlank;
+import com.xiesu.common.page.Pageable;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * @author xiesu created on 2023/3/28 22:50
+ * @author xiesu created on 2023/4/4 11:33
  */
 @Getter
 @Setter
-public class DelBillBatchParam implements Serializable {
+public class QueryBillPageParam extends Pageable {
 
-    /**
-     * 待删除账单id
-     */
-    @NotBlank(message = "待删除账单id不能为空")
-    private List<Long> billIdList;
 
 }

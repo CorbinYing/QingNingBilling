@@ -11,26 +11,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xiesu.controller.bill.param;
-
+package com.xiesu.common.response;
 
 import java.io.Serializable;
-import java.util.List;
-import javax.validation.constraints.NotBlank;
-import lombok.Getter;
-import lombok.Setter;
+
 
 /**
- * @author xiesu created on 2023/3/28 22:50
+ * 抽象统一返回结果封装类
+ *
+ * @author xiesu
  */
-@Getter
-@Setter
-public class DelBillBatchParam implements Serializable {
+public abstract class ResponseResult implements Serializable {
+
 
     /**
-     * 待删除账单id
+     * 返回内容的code值，code=0成功，其他均为失败
      */
-    @NotBlank(message = "待删除账单id不能为空")
-    private List<Long> billIdList;
+    private Integer code;
+
+
+    public Integer getCode() {
+        return code;
+    }
+
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
 
 }

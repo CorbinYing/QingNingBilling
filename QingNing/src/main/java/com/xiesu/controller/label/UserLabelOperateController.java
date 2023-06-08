@@ -13,22 +13,20 @@
  */
 package com.xiesu.controller.label;
 
-import com.xiesu.common.response.AbstractResponse;
-import com.xiesu.common.response.ErrResponseResult;
 import com.xiesu.common.response.OkResponseResult;
+import com.xiesu.common.response.ResponseBuildUtil;
+import com.xiesu.common.response.ResponseResult;
 import com.xiesu.controller.AbstractBaseController;
 import com.xiesu.controller.label.param.DelLabelBatchParam;
-import com.xiesu.vo.label.UserLabelVO;
 import com.xiesu.convert.UserLabelConvert;
 import com.xiesu.domain.UserLabel;
 import com.xiesu.service.UserLabelService;
-import jakarta.annotation.Resource;
-import jakarta.validation.Valid;
+import com.xiesu.vo.label.UserLabelVO;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+import javax.annotation.Resource;
+import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.util.LambdaUtil;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -67,15 +65,15 @@ public class UserLabelOperateController extends AbstractBaseController {
      * @param labelId 标签id
      */
     @GetMapping(path = "/query-one")
-    public AbstractResponse queryUserLabel(@RequestParam("labelId") Long labelId) {
+    public ResponseResult queryUserLabel(@RequestParam("labelId") Long labelId) {
         Optional<UserLabel> userLabelOp = userLabelService.findByLabelId(labelId);
         if (userLabelOp.isEmpty()) {
             log.info("未获取到标签信息，labelId={}", labelId);
-            return ErrResponseResult.failed().msg("未查询到标签信息").build();
+            return ResponseBuildUtil.failed().errMsg("未查询到标签信息").build();
         }
 
         UserLabel label = userLabelOp.get();
-        return OkResponseResult.success()
+        return ResponseBuildUtil.success()
                 .item("labelId", label.getLabelId())
                 .item("labelName", label.getLabelName())
                 .item("createTime", label.getCreateTime())
@@ -89,11 +87,11 @@ public class UserLabelOperateController extends AbstractBaseController {
      * @param labelBatchParam 标签id集合
      */
     @PostMapping("/delete-batch")
-    public AbstractResponse deleteBatchUserLabel(
+    public ResponseResult deleteBatchUserLabel(
             @RequestBody @Valid DelLabelBatchParam labelBatchParam) {
         List<Long> labelIdList = labelBatchParam.getLabelIdList();
         userLabelService.softDeleteBatchByLabelId(labelIdList);
-        return OkResponseResult.success().build();
+        return ResponseBuildUtil.success().build();
     }
 
 
@@ -103,9 +101,9 @@ public class UserLabelOperateController extends AbstractBaseController {
      * @param labelId 标签id
      */
     @DeleteMapping("/delete-one")
-    public AbstractResponse deleteOneUserLabel(@RequestParam("labelId") Long labelId) {
+    public ResponseResult deleteOneUserLabel(@RequestParam("labelId") Long labelId) {
         userLabelService.softDeleteByLabelId(labelId);
-        return OkResponseResult.success().build();
+        return ResponseBuildUtil.success().build();
     }
 
 }

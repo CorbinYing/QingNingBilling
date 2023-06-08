@@ -13,7 +13,8 @@
  */
 package com.xiesu.service;
 
-import com.xiesu.domain.UserBill;
+import com.github.pagehelper.PageInfo;
+import com.xiesu.common.page.Pageable;
 import com.xiesu.dto.bill.UserBillDTO;
 import java.util.List;
 
@@ -53,5 +54,15 @@ public interface UserBillService {
      * @return userBillDto
      */
     UserBillDTO findOne(Long billId);
+
+
+    /**
+     * 查询指定账户账单信息
+     *
+     * @param pageable 分页信息
+     * @return PageInfo<userBillDto>
+     */
+    PageInfo<UserBillDTO> findListByAccountId(Pageable pageable);
+
 
 }

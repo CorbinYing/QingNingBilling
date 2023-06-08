@@ -14,11 +14,8 @@
 package com.xiesu.common.response;
 
 import com.xiesu.common.except.AbstractCustomerException;
-import com.xiesu.common.response.OkResponseResult.SucResponseBuilder;
 import java.text.MessageFormat;
-import java.util.LinkedHashMap;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
@@ -31,7 +28,13 @@ import org.springframework.util.Assert;
  * @author xiesu
  */
 @Getter
-public class ErrResponseResult extends AbstractResponse {
+public class ErrResponseResult extends ResponseResult {
+
+    /**
+     * 返回错误消息
+     */
+    private String errMsg;
+
 
     /**
      * 构造返回结果，自定义msg优先级高于国际化默认msg
@@ -55,8 +58,8 @@ public class ErrResponseResult extends AbstractResponse {
             msg = ResponseDefaultMsg.getDefaultMsg(code, locale, params);
         }
 
-        responseMap.put(ERR_CODE_KEY, code);
-        responseMap.put(ERR_MSG_KEY, msg);
+        this.setCode(code);
+        this.errMsg = msg;
     }
 
     private ErrResponseResult(int code, String msg) {
@@ -68,8 +71,8 @@ public class ErrResponseResult extends AbstractResponse {
             msg = ResponseDefaultMsg.getDefaultMsg(code, locale);
         }
 
-        responseMap.put(ERR_CODE_KEY, code);
-        responseMap.put(ERR_MSG_KEY, msg);
+        this.setCode(code);
+        this.errMsg = msg;
     }
 
 
@@ -78,45 +81,12 @@ public class ErrResponseResult extends AbstractResponse {
      *
      * @param e e
      */
-    public static ErrResponseResult failed(AbstractCustomerException e) {
+    static ErrResponseResult failed(AbstractCustomerException e) {
         return new ErrResponseResult(e);
     }
 
 
-    public static ErrResponseBuilder failed() {
-        return new ErrResponseBuilder();
+    static ErrResponseResult failed(int code, String msg) {
+        return new ErrResponseResult(code, msg);
     }
-
-
-    public static class ErrResponseBuilder {
-
-        private Integer code;
-        private String msg;
-
-        private ErrResponseBuilder() {
-        }
-
-
-        public ErrResponseBuilder code(int code) {
-            this.code = code;
-            return this;
-        }
-
-        public ErrResponseBuilder msg(String msg) {
-            this.msg = msg;
-            return this;
-        }
-
-        /**
-         * 构建外部结果类
-         */
-        public ErrResponseResult build() {
-            if (Objects.isNull(code)) {
-                code = ResponseCode.ERR_BUSI;
-            }
-            return new ErrResponseResult(code, msg);
-        }
-    }
-
-
 }

@@ -22,14 +22,14 @@ import java.util.Objects;
  * @author xiesu
  */
 //@ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
-public class ExposedException extends AbstractCustomerException {
+public class ServiceException extends AbstractCustomerException {
 
 
     /**
      * Constructs a new runtime exception with the specified detail message. The cause is not
      * initialized, and may subsequently be initialized by a call to {@link #initCause}.
      */
-    public ExposedException(Integer code) {
+    public ServiceException(Integer code) {
         super(code, null, null);
     }
 
@@ -37,7 +37,7 @@ public class ExposedException extends AbstractCustomerException {
      * Constructs a new runtime exception with the specified detail message. The cause is not
      * initialized, and may subsequently be initialized by a call to {@link #initCause}.
      */
-    public ExposedException(Integer code, String msg) {
+    public ServiceException(Integer code, String msg) {
         super(code, msg, null);
     }
 
@@ -48,7 +48,7 @@ public class ExposedException extends AbstractCustomerException {
      * @param code   code notnull
      * @param params nullable
      */
-    public ExposedException(Integer code, Object... params) {
+    public ServiceException(Integer code, Object... params) {
         super(code, null, params);
     }
 
@@ -59,7 +59,7 @@ public class ExposedException extends AbstractCustomerException {
      * @param msg    not null
      * @param params 参数
      */
-    public ExposedException(Integer code, String msg, Object... params) {
+    public ServiceException(Integer code, String msg, Object... params) {
         super(code, MessageFormat.format(Objects.requireNonNull(msg), params), null);
     }
 
