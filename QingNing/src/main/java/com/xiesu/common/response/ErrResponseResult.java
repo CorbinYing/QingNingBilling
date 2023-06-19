@@ -33,7 +33,7 @@ public class ErrResponseResult extends ResponseResult {
     /**
      * 返回错误消息
      */
-    private String errMsg;
+    private final String errMsg;
 
 
     /**

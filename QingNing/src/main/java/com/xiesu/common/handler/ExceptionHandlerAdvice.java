@@ -41,13 +41,13 @@ public class ExceptionHandlerAdvice {
     /**
      * 全局处理手动定义的异常 并进行封装
      */
-    @ExceptionHandler(value = {ServiceException.class, ServiceException.class})
+    @ExceptionHandler(value = {ServiceException.class})
     public ResponseResult handleServiceException(AbstractCustomerException e) {
         log.error(e.getClass().getName(), e);
         return ResponseBuildUtil.failed(e);
     }
 
-    @ExceptionHandler(value = {ServiceException.class, MissingResourceException.class})
+    @ExceptionHandler(value = {MissingResourceException.class})
     public ErrResponseResult handleMissingResourceException(MissingResourceException e) {
         log.error("国际化配置文件无对应errCode", e);
         return ResponseBuildUtil.failed().code(-1).errMsg("国际化配置文件无对应errCode").build();

@@ -14,7 +14,6 @@
 package com.xiesu.controller.bill;
 
 import com.github.pagehelper.PageInfo;
-import com.xiesu.common.response.OkResponseResult;
 import com.xiesu.common.response.ResponseBuildUtil;
 import com.xiesu.common.response.ResponseResult;
 import com.xiesu.controller.AbstractBaseController;
@@ -25,9 +24,9 @@ import com.xiesu.convert.UserBillConvert;
 import com.xiesu.dto.bill.UserBillDTO;
 import com.xiesu.service.UserBillService;
 import com.xiesu.vo.bill.UserBillVO;
+import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 import java.util.List;
-import javax.annotation.Resource;
-import javax.validation.Valid;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
