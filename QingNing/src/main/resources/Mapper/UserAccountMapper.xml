@@ -33,4 +33,10 @@
     values (#{gmtCreate}, #{accountId}, #{pwd}, #{mail}, #{tel});
   </insert>
 
+  <select id="selectPwdByAccountId" parameterType="string" resultType="string">
+    select pwd
+    from user_account
+    where account_id = #{accountId};
+  </select>
+
 </mapper>

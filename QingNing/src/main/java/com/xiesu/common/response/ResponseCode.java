@@ -21,7 +21,6 @@ import java.io.Serializable;
 public class ResponseCode implements Serializable {
 
 
-
     /**
      * 成功
      */
@@ -32,5 +31,8 @@ public class ResponseCode implements Serializable {
      * 系统内部异常
      */
     public static final Integer ERR_CONF = 100001;
+
+
+    public static final Integer ERR_101000 = 101000;
 
 }

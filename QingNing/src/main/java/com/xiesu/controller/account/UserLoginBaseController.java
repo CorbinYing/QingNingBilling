@@ -43,12 +43,11 @@ public class UserLoginBaseController extends AbstractBaseController {
     public boolean loginByPwd(@RequestParam("auth-id") String authId,
             @RequestParam("pwd-ciphertext") String pwdCiphertext) {
 
-        String accountId = authId;
-        String pwd = pwdCiphertext;
-
-        AuthenticationToken token = new UsernamePasswordToken(accountId, pwd);
+        AuthenticationToken token = new UsernamePasswordToken(authId, pwdCiphertext);
         Subject subject = SecurityUtils.getSubject();
         subject.login(token);
+
+        System.out.println(subject);
 
         return true;
 

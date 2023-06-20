@@ -15,6 +15,7 @@ package com.xiesu.dao;
 
 import com.xiesu.domain.UserAccount;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 用户账户Mapper
@@ -26,4 +27,5 @@ public interface UserAccountDao {
 
     UserAccount insertOne(UserAccount account);
 
+    String selectPwdByAccountId(@Param("accountId") String accountId);
 }

@@ -13,6 +13,11 @@
  */
 package com.xiesu.shiro;
 
+import com.xiesu.common.except.ServiceException;
+import com.xiesu.common.response.ResponseCode;
+import com.xiesu.dao.UserAccountDao;
+import jakarta.annotation.Resource;
+import java.util.Objects;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -28,6 +33,10 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class MyRealm extends AuthorizingRealm {
+
+
+    @Resource
+    private UserAccountDao userAccountDao;
 
     /**
      * Retrieves the AuthorizationInfo for the given principals from the underlying data store. When
@@ -70,14 +79,17 @@ public class MyRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token)
             throws AuthenticationException {
         String accountId = (String) token.getPrincipal();
+        Objects.requireNonNull(accountId);
 
-        //查出来的用户名
-        String preDefaultPWD = "10086";
-
+        //查询密码
+        String pwd = userAccountDao.selectPwdByAccountId(accountId);
         //检测不到用户名可以报错
+        if (Objects.isNull(pwd)) {
+            throw new ServiceException(ResponseCode.ERR_101000);
+        }
 
         //返回一个新封装的认证实体，传入的是用户名，数据库查出来的密码，和当前Realm的名字
         //shiro将账号和密码分成两个地方进行验证，如果我们不自己定义，那么就会调用shiro默认的校验方法。
-        return new SimpleAuthenticationInfo(accountId, preDefaultPWD, this.getName());
+        return new SimpleAuthenticationInfo(accountId, pwd, this.getName());
     }
 }
