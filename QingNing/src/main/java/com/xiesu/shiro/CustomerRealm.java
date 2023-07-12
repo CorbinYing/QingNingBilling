@@ -29,16 +29,20 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.context.annotation.Configuration;
 
 /**
+ * Shiro 将数据库中的数据，存放到Realm这种对象中,自定义认证与授权
+ *
  * @author xiesu created on 2023/4/20 14:04
  */
 @Configuration
-public class MyRealm extends AuthorizingRealm {
+public class CustomerRealm extends AuthorizingRealm {
 
 
     @Resource
     private UserAccountDao userAccountDao;
 
     /**
+     * 加载授权信息
+     * <p/>
      * Retrieves the AuthorizationInfo for the given principals from the underlying data store. When
      * returning an instance from this method, you might want to consider using an instance of
      * {@link SimpleAuthorizationInfo SimpleAuthorizationInfo}, as it is suitable in most cases.

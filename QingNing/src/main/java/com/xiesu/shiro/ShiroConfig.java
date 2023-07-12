@@ -18,13 +18,14 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.AuthenticatingRealm;
-
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
+ * shiro 核心配置
+ *
  * @author xiesu created on 2023/4/20 14:31
  */
 @Configuration
@@ -34,33 +35,34 @@ public class ShiroConfig {
     DefaultWebSecurityManager defaultWebSecurityManager(AuthenticatingRealm realm) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
 
-        realm.setCredentialsMatcher(new MyCredentialsMatcher());
-
+        realm.setCredentialsMatcher(new CustomerCredentialsMatcher());
         securityManager.setRealm(realm);
         return securityManager;
     }
 
-
-    //设置访问拦截器
+    /**
+     * 设置访问拦截器
+     */
     @Bean
     ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
-        //传入安全管理器
+        //配置安全管理器
         bean.setSecurityManager(securityManager);
-        //传入未登录用户访问登陆用户的权限所跳转的页面
-        bean.setLoginUrl("/login/pwd-auth");
 
-        //设置成功后返回页面
-        bean.setSuccessUrl("/index");
-
-        //访问未授权网页所跳转的页面
-        bean.setUnauthorizedUrl("/unauthorized");
+        //配置资源访问权限
         Map<String, String> map = new LinkedHashMap<>();
         //允许  需要设置login为anon 否则登陆成功后无法成功跳转。
         map.put("/login/pwd-auth", "anon");
-        //设置所有的请求未登录不允许进入。
+        //设置其他所有请求未登录不允许进入。
         map.put("/**", "authc");
         bean.setFilterChainDefinitionMap(map);
+
+        //配置未登录用户访问登陆用户的权限所跳转的页面
+        bean.setLoginUrl("/login/pwd-auth");
+        //设置成功后返回页面
+        bean.setSuccessUrl("/index");
+        //访问未授权网页所跳转的页面
+        bean.setUnauthorizedUrl("/unauthorized");
         return bean;
     }
 

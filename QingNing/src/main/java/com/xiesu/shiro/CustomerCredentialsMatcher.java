@@ -19,9 +19,11 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.credential.SimpleCredentialsMatcher;
 
 /**
+ * 自定义密码匹配
+ *
  * @author xiesu created on 2023/4/20 14:19
  */
-public class MyCredentialsMatcher extends SimpleCredentialsMatcher {
+public class CustomerCredentialsMatcher extends SimpleCredentialsMatcher {
 
     /**
      * This implementation acquires the {@code token}'s credentials (via

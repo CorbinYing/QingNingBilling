@@ -1,10 +1,13 @@
 package com.xiesu;
 
-import javax.imageio.ImageIO;
+import com.xiesu.vo.bill.UserBillVO;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import javax.imageio.ImageIO;
 
 public class RotateImage {
 
@@ -55,13 +58,19 @@ public class RotateImage {
 
     public static void main(String[] args) {
 
-        try {
+        //try {
+        //
+        //    RotateImage rotateImage = new RotateImage();
+        //    rotateImage.rotateImage();
+        //
+        //} catch (Exception e) {
+        //    e.printStackTrace();
+        //}
 
-            RotateImage rotateImage = new RotateImage();
-            rotateImage.rotateImage();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        List<Integer> list = new ArrayList<>();
+        UserBillVO vo = new UserBillVO();
+        vo.setBillId(123L);
+        list.add(123);
+        System.out.println(list.toString());
     }
 }
