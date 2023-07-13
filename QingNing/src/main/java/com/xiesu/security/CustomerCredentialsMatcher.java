@@ -13,9 +13,10 @@
  */
 package com.xiesu.security;
 
+import com.nimbusds.jose.JOSEException;
+import java.text.ParseException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.credential.SimpleCredentialsMatcher;
 
 /**
@@ -41,20 +42,21 @@ public class CustomerCredentialsMatcher extends SimpleCredentialsMatcher {
      */
     @Override
     public boolean doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) {
-        if (token instanceof UsernamePasswordToken) {
-            char[] pwdIn = (char[]) token.getCredentials();
-            char[] pwdRel = ((String) info.getCredentials()).toCharArray();
-            return equals(pwdRel, pwdIn);
-
+        if (token instanceof JwtToken) {
+            try {
+                return ES256kJwtUtil.signatureVerify((String) token.getCredentials());
+            } catch (ParseException | JOSEException e) {
+                throw new RuntimeException(e);
+            }
         } else {
             return super.doCredentialsMatch(token, info);
         }
-
-
     }
 
 
     /**
+     * JWT Token 认证
+     * <p></>
      * Returns {@code true} if the {@code tokenCredentials} argument is logically equal to the
      * {@code accountCredentials} argument.
      * <p/>
@@ -76,6 +78,10 @@ public class CustomerCredentialsMatcher extends SimpleCredentialsMatcher {
      */
     @Override
     protected boolean equals(Object tokenCredentials, Object accountCredentials) {
-        return super.equals(tokenCredentials, accountCredentials);
+        try {
+            return ES256kJwtUtil.signatureVerify((String) tokenCredentials);
+        } catch (ParseException | JOSEException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

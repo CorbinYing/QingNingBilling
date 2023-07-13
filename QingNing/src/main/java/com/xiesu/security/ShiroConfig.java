@@ -67,28 +67,30 @@ public class ShiroConfig {
         ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
         //配置安全管理器
         shiroFilter.setSecurityManager(securityManager);
-        //配置未登录用户访问登陆用户的权限所跳转的页面
-        shiroFilter.setLoginUrl("/login/pwd-auth");
-        //设置成功后返回页面
-        shiroFilter.setSuccessUrl("/index");
-        //访问未授权网页所跳转的页面
-        shiroFilter.setUnauthorizedUrl("/unauthorized");
+        ////配置未登录用户访问登陆用户的权限所跳转的页面
+        //shiroFilter.setLoginUrl("/login/pwd-auth");
+        ////设置成功后返回页面
+        //shiroFilter.setSuccessUrl("/index");
+        ////访问未授权网页所跳转的页面
+        //shiroFilter.setUnauthorizedUrl("/unauthorized");
 
         //指定除了login和logout之外的请求都先经过jwtFilter
         Map<String, Filter> filterMap = new HashMap<>();
+        //这个地方其实另外两个filter可以不设置，默认就是
         //将jwtFilter注册到shiro的Filter中
         filterMap.put("jwt", new JwtFilter());
-        //这个地方其实另外两个filter可以不设置，默认就是
+        //shiro有几种默认的拦截器，authc,anno,roles,user等 authc就是FormAuthenticationFilter的实例
         filterMap.put("anon", new AnonymousFilter());
         filterMap.put("logout", new LogoutFilter());
         shiroFilter.setFilters(filterMap);
 
-        //配置资源访问权限
+        //配置资源访问权限,注意使用【有序MAP】，【/** 放最后】，否则范围大的现匹配，导致多个过滤器工作不正常
         Map<String, String> map = new LinkedHashMap<>();
         //允许  需要设置login为anon 否则登陆成功后无法成功跳转。
         map.put("/login/pwd-auth", "anon");
-        //设置其他所有请求未登录不允许进入。
-        map.put("/**", "authc");
+        //设置其他所有请求 使用自定义过滤器，未登录不允许进入。
+        map.put("/**", "jwt");
+
         shiroFilter.setFilterChainDefinitionMap(map);
 
         return shiroFilter;

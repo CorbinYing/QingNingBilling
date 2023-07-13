@@ -29,9 +29,11 @@ import org.slf4j.LoggerFactory;
  * @author xiesu created on 2023/7/13 18:50
  */
 
+//public class JwtFilter extends BasicHttpAuthenticationFilter {
 public class JwtFilter extends AccessControlFilter {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtFilter.class);
+
 
     /*
      * 1. 返回true，shiro就直接允许访问url
@@ -39,7 +41,7 @@ public class JwtFilter extends AccessControlFilter {
      * */
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response,
-            Object mappedValue) throws Exception {
+            Object mappedValue) {
         logger.warn("isAccessAllowed 方法被调用");
         //这里先让它始终返回false来使用onAccessDenied()方法
         return false;

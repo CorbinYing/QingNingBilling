@@ -13,7 +13,9 @@
  */
 package com.xiesu.controller.account;
 
+import com.nimbusds.jose.JOSEException;
 import com.xiesu.controller.AbstractBaseController;
+import com.xiesu.security.ES256kJwtUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -40,16 +42,14 @@ public class UserLoginBaseController extends AbstractBaseController {
      * @param pwdCiphertext 密码密文
      */
     @PostMapping("/pwd-auth")
-    public boolean loginByPwd(@RequestParam("auth-id") String authId,
-            @RequestParam("pwd-ciphertext") String pwdCiphertext) {
+    public String loginByPwd(@RequestParam("auth-id") String authId,
+            @RequestParam("pwd-ciphertext") String pwdCiphertext) throws JOSEException {
 
         AuthenticationToken token = new UsernamePasswordToken(authId, pwdCiphertext);
         Subject subject = SecurityUtils.getSubject();
         subject.login(token);
 
-        System.out.println(subject);
-
-        return true;
+        return ES256kJwtUtil.encode("1", 1000, null);
 
     }
 }
