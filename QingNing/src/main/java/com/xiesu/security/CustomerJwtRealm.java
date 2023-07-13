@@ -13,19 +13,21 @@
  */
 package com.xiesu.security;
 
-import com.xiesu.common.except.ServiceException;
-import com.xiesu.common.response.ResponseCode;
+import com.nimbusds.jose.JOSEException;
 import com.xiesu.dao.UserAccountDao;
 import jakarta.annotation.Resource;
-import java.util.Objects;
+import java.text.ParseException;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -36,9 +38,21 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class CustomerJwtRealm extends AuthorizingRealm {
 
+    private static final Logger logger = LoggerFactory.getLogger(CustomerJwtRealm.class);
 
     @Resource
     private UserAccountDao userAccountDao;
+
+
+    /**
+     * 多重写一个support 标识这个Realm是专门用来验证JwtToken 不负责验证其他的token（UsernamePasswordToken）
+     */
+    @Override
+    public boolean supports(AuthenticationToken token) {
+        //这个token就是从过滤器中传入的jwtToken
+        return token instanceof JwtToken;
+    }
+
 
     /**
      * 加载授权信息
@@ -79,21 +93,51 @@ public class CustomerJwtRealm extends AuthorizingRealm {
      *                                 realm-specific authentication logic for the specified
      *                                 <tt>token</tt>
      */
+
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token)
             throws AuthenticationException {
-        String accountId = (String) token.getPrincipal();
-        Objects.requireNonNull(accountId);
 
-        //查询密码
-        String pwd = userAccountDao.selectPwdByAccountId(accountId);
-        //检测不到用户名可以报错
-        if (Objects.isNull(pwd)) {
-            throw new ServiceException(ResponseCode.ERR_101000);
+        String jwt = (String) token.getPrincipal();
+        if (jwt == null) {
+            throw new NullPointerException("jwtToken 不允许为空");
         }
+        try {
+            //签名有效即可认为认证成功
+            if (!ES256kJwtUtil.signatureVerify(jwt)) {
+                throw new UnknownAccountException();
+            }
 
-        //返回一个新封装的认证实体，传入的是用户名，数据库查出来的密码，和当前Realm的名字
+            //下面是验证这个user是否是真实存在的
+            //判断数据库中username是否存在
+            String username = (String) ES256kJwtUtil.decode(jwt).getClaim("username");
+            logger.info("在使用token登录" + username);
+
+        } catch (ParseException | JOSEException e) {
+            throw new RuntimeException(e);
+        }
+        //返回一个新封装的认证实体，传入的是身份信息，认证信息，和当前Realm的名字
         //shiro将账号和密码分成两个地方进行验证，如果我们不自己定义，那么就会调用shiro默认的校验方法。
-        return new SimpleAuthenticationInfo(accountId, pwd, this.getName());
+        //此处 principal,   credentials 都是jwt
+        return new SimpleAuthenticationInfo(jwt, jwt, this.getClass().getName());
+
     }
+
+    //
+    //@Override
+    //protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token)
+    //        throws AuthenticationException {
+    //    String accountId = (String) token.getPrincipal();
+    //    Objects.requireNonNull(accountId);
+    //
+    //    //查询密码
+    //    String pwd = userAccountDao.selectPwdByAccountId(accountId);
+    //    //检测不到用户名可以报错
+    //    if (Objects.isNull(pwd)) {
+    //        throw new ServiceException(ResponseCode.ERR_101000);
+    //    }
+    //
+    //
+    //    return new SimpleAuthenticationInfo(accountId, pwd, this.getName());
+    //}
 }
