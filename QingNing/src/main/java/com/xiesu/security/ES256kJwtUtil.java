@@ -18,10 +18,12 @@ import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.crypto.ECDSASigner;
+import com.nimbusds.jose.crypto.ECDSAVerifier;
 import com.nimbusds.jose.crypto.bc.BouncyCastleProviderSingleton;
 import com.nimbusds.jose.jwk.ECKey;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import java.text.ParseException;
 import java.util.Base64;
 import java.util.Map;
 import org.apache.commons.lang3.SerializationUtils;
@@ -70,27 +72,21 @@ public class ES256kJwtUtil {
     }
 
 
-    /*
-     *这里就是产生jwt字符串的地方
-     * jwt字符串包括三个部分
-     *  1. header
-     *      -当前字符串的类型，一般都是“JWT”
-     *      -哪种算法加密，“HS256”或者其他的加密算法
-     *      所以一般都是固定的，没有什么变化
-     *  2. payload
-     *      一般有四个最常见的标准字段（下面有）
-     *      iat：签发时间，也就是这个jwt什么时候生成的
-     *      jti：JWT的唯一标识
-     *      iss：签发人，一般都是username或者userId
-     *      exp：过期时间
-     *
-     * */
+    /**
+     * 签名办法JWT Token jwt字符串包括三个部分 1. header -当前字符串的类型，一般都是“JWT” -哪种算法加密，“HS256”或者其他的加密算法
+     * 所以一般都是固定的，没有什么变化 2. payload 一般有四个最常见的标准字段（下面有） iat：签发时间，也就是这个jwt什么时候生成的 jti：JWT的唯一标识
+     * iss：签发人，一般都是username或者userId exp：过期时间
+     * <p>
+     * 3.signature
+     */
     public static String encode(String iss, long ttlMillis, Map<String, Object> claims)
             throws JOSEException {
 
         // Sample JWT claims
         var claimsSet = new JWTClaimsSet.Builder()
                 .subject("alice")
+                .subject("blince")
+                .claim("zhangsan", "lisi")
                 .build();
 
         // Create JWT for ES256K alg
@@ -105,46 +101,37 @@ public class ES256kJwtUtil {
         signer.getJCAContext().setProvider(BouncyCastleProviderSingleton.getInstance());
         jwt.sign(signer);
 
-        // Output the JWT
-        System.out.println(jwt.serialize());
-
         return jwt.serialize();
     }
 
-    //相当于encode的方向，传入jwtToken生成对应的username和password等字段。Claim就是一个map
-    //也就是拿到荷载部分所有的键值对
-    //public Claims decode(String jwtToken) {
-    //
-    //    // 得到 DefaultJwtParser
-    //    return Jwts.parser()
-    //            // 设置签名的秘钥
-    //            .setSigningKey(base64EncodedSecretKey)
-    //            // 设置需要解析的 jwt
-    //            .parseClaimsJws(jwtToken).getBody();
-    //}
 
-    //判断jwtToken是否合法
-    //public boolean isVerify(String jwtToken) {
-    //    //这个是官方的校验规则，这里只写了一个”校验算法“，可以自己加
-    //    Algorithm algorithm = null;
-    //    switch (signatureAlgorithm) {
-    //        case HS256:
-    //            algorithm = Algorithm.HMAC256(Base64.decodeBase64(base64EncodedSecretKey));
-    //            break;
-    //        default:
-    //            throw new RuntimeException("不支持该算法");
-    //    }
-    //    JWTVerifier verifier = JWT.require(algorithm).build();
-    //    verifier.verify(jwtToken);  // 校验不通过会抛出异常
-    //    //判断合法的标准：1. 头部和荷载部分没有篡改过。2. 没有过期
-    //    return true;
-    //}
+    /**
+     * token 签名校验
+     *
+     * @param jwtToken token
+     * @return true or false
+     * @throws ParseException
+     * @throws JOSEException
+     */
+    public static boolean signatureVerify(String jwtToken) throws ParseException, JOSEException {
+        SignedJWT jwt = SignedJWT.parse(jwtToken);
 
-
-    public static void main(String[] args) throws JOSEException {
-        encode("123", 1000, null);
+        // Verify the ES256K signature with the public EC key
+        var verifier = new ECDSAVerifier(ecJWK.toECPublicKey());
+        verifier.getJCAContext().setProvider(BouncyCastleProviderSingleton.getInstance());
+        return jwt.verify(verifier);
     }
 
+    /**
+     * 解密token，拿到存储的payload信息
+     *
+     * @param jwtToken token
+     * @return
+     * @throws ParseException
+     */
+    public static JWTClaimsSet decode(String jwtToken) throws ParseException {
+        return SignedJWT.parse(jwtToken).getJWTClaimsSet();
+    }
 
     private ES256kJwtUtil() {
     }
