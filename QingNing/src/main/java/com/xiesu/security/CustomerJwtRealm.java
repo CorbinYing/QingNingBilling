@@ -11,7 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xiesu.shiro;
+package com.xiesu.security;
 
 import com.xiesu.common.except.ServiceException;
 import com.xiesu.common.response.ResponseCode;
@@ -34,7 +34,7 @@ import org.springframework.context.annotation.Configuration;
  * @author xiesu created on 2023/4/20 14:04
  */
 @Configuration
-public class CustomerRealm extends AuthorizingRealm {
+public class CustomerJwtRealm extends AuthorizingRealm {
 
 
     @Resource
