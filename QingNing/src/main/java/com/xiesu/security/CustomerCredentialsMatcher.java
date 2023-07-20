@@ -18,6 +18,8 @@ import java.text.ParseException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.credential.SimpleCredentialsMatcher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 自定义密码匹配
@@ -25,6 +27,8 @@ import org.apache.shiro.authc.credential.SimpleCredentialsMatcher;
  * @author xiesu created on 2023/4/20 14:19
  */
 public class CustomerCredentialsMatcher extends SimpleCredentialsMatcher {
+
+    private static final Logger logger = LoggerFactory.getLogger(CustomerCredentialsMatcher.class);
 
     /**
      * This implementation acquires the {@code token}'s credentials (via
@@ -43,16 +47,25 @@ public class CustomerCredentialsMatcher extends SimpleCredentialsMatcher {
     @Override
     public boolean doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) {
         if (token instanceof JwtToken) {
-            try {
-                return ES256kJwtUtil.signatureVerify((String) token.getCredentials());
-            } catch (ParseException | JOSEException e) {
-                throw new RuntimeException(e);
-            }
+            return doCredentialsMatchJwtToken((JwtToken) token);
         } else {
             return super.doCredentialsMatch(token, info);
         }
     }
 
+    /**
+     * j校验token
+     *
+     * @param token jwtToken
+     * @return boolean
+     */
+    private boolean doCredentialsMatchJwtToken(JwtToken token) {
+        try {
+            return ES256kJwtUtil.signatureVerify((String) token.getCredentials());
+        } catch (ParseException | JOSEException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     /**
      * JWT Token 认证
@@ -78,10 +91,6 @@ public class CustomerCredentialsMatcher extends SimpleCredentialsMatcher {
      */
     @Override
     protected boolean equals(Object tokenCredentials, Object accountCredentials) {
-        try {
-            return ES256kJwtUtil.signatureVerify((String) tokenCredentials);
-        } catch (ParseException | JOSEException e) {
-            throw new RuntimeException(e);
-        }
+        return super.equals(tokenCredentials, accountCredentials);
     }
 }

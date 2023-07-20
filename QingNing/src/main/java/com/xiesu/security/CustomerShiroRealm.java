@@ -38,9 +38,9 @@ import org.springframework.context.annotation.Configuration;
  * @author xiesu created on 2023/4/20 14:04
  */
 @Configuration
-public class CustomerJwtRealm extends AuthorizingRealm {
+public class CustomerShiroRealm extends AuthorizingRealm {
 
-    private static final Logger logger = LoggerFactory.getLogger(CustomerJwtRealm.class);
+    private static final Logger logger = LoggerFactory.getLogger(CustomerShiroRealm.class);
 
     @Resource
     private UserAccountDao userAccountDao;
@@ -53,7 +53,7 @@ public class CustomerJwtRealm extends AuthorizingRealm {
 
 
     /**
-     * 加载授权信息
+     * 加载授权信息，仅在第一次访问非公开资源时进行加载
      * <p/>
      * Retrieves the AuthorizationInfo for the given principals from the underlying data store. When
      * returning an instance from this method, you might want to consider using an instance of
