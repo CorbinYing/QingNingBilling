@@ -13,7 +13,6 @@
  */
 package com.xiesu.controller.label;
 
-import com.xiesu.common.response.OkResponseResult;
 import com.xiesu.common.response.ResponseBuildUtil;
 import com.xiesu.common.response.ResponseResult;
 import com.xiesu.controller.AbstractBaseController;
@@ -22,10 +21,10 @@ import com.xiesu.convert.UserLabelConvert;
 import com.xiesu.domain.UserLabel;
 import com.xiesu.service.UserLabelService;
 import com.xiesu.vo.label.UserLabelVO;
-import java.util.List;
-import java.util.Optional;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import java.util.List;
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

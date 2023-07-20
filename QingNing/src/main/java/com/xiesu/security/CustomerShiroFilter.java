@@ -16,7 +16,7 @@ package com.xiesu.security;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
-import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
+import org.apache.shiro.web.filter.authc.BearerHttpAuthenticationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,10 +27,11 @@ import org.slf4j.LoggerFactory;
  * @author xiesu created on 2023/7/13 18:50
  */
 
-public class JwtFilter extends BasicHttpAuthenticationFilter {
+public class CustomerShiroFilter extends BearerHttpAuthenticationFilter {
+//public class JwtFilter extends BasicHttpAuthenticationFilter {
 //public class JwtFilter extends AccessControlFilter {
 
-    private static final Logger logger = LoggerFactory.getLogger(JwtFilter.class);
+    private static final Logger logger = LoggerFactory.getLogger(CustomerShiroFilter.class);
 
 
     /*
