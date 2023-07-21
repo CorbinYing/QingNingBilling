@@ -15,7 +15,6 @@ package com.xiesu.security;
 
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
-import jakarta.servlet.http.HttpServletRequest;
 import org.apache.shiro.web.filter.authc.BearerHttpAuthenticationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,37 +45,36 @@ public class CustomerShiroFilter extends BearerHttpAuthenticationFilter {
         return false;
     }
 
+    ///**
+    // * 返回结果为true表明登录通过
+    // */
+    //@Override
+    //protected boolean onAccessDenied(ServletRequest servletRequest,
+    //        ServletResponse servletResponse) throws Exception {
+    //    logger.warn("onAccessDenied 方法被调用");
+    //    //执行方法中没有抛出异常就表示登录成功
+    //    return executeLogin(servletRequest, servletResponse);
+    //}
 
-    /**
-     * 返回结果为true表明登录通过
-     */
-    @Override
-    protected boolean onAccessDenied(ServletRequest servletRequest,
-            ServletResponse servletResponse) {
-        logger.warn("onAccessDenied 方法被调用");
-        //执行方法中没有抛出异常就表示登录成功
-        return executeLogin(servletRequest, servletResponse);
-    }
-
-    /**
-     * 执行登陆
-     */
-    @Override
-    protected boolean executeLogin(ServletRequest request, ServletResponse response) {
-        //这个地方和前端约定，要求前端将jwtToken放在请求的Header部分
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        //所以以后发起请求的时候就需要在Header中放一个Authorization，值就是对应的Token
-        String jwt = httpServletRequest.getHeader("Authorization");
-        logger.info("Header中获取jwtToken={}", jwt);
-        JwtToken jwtToken = new JwtToken(jwt);
-
-        // 委托 realm 进行登录认证
-        //所以这个地方最终还是调用JwtRealm进行的认证
-        //也就是subject.login(token)
-        getSubject(request, response).login(jwtToken);
-        // 没有异常即表示验证（登陆）状态成功
-        return true;
-    }
+    ///**
+    // * 执行登陆
+    // */
+    //@Override
+    //protected boolean executeLogin(ServletRequest request, ServletResponse response) {
+    //    //这个地方和前端约定，要求前端将jwtToken放在请求的Header部分
+    //    HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+    //    //所以以后发起请求的时候就需要在Header中放一个Authorization，值就是对应的Token
+    //    String jwt = httpServletRequest.getHeader("Authorization");
+    //    logger.info("Header中获取jwtToken={}", jwt);
+    //    JwtToken jwtToken = new JwtToken(jwt);
+    //
+    //    // 委托 realm 进行登录认证
+    //    //所以这个地方最终还是调用JwtRealm进行的认证
+    //    //也就是subject.login(token)
+    //    getSubject(request, response).login(jwtToken);
+    //    // 没有异常即表示验证（登陆）状态成功
+    //    return true;
+    //}
     //
     ////登录失败时默认返回 401 状态码
     //private void onLoginFail(ServletResponse response) throws IOException {

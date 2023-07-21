@@ -21,6 +21,7 @@ import java.util.Objects;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.BearerToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -48,7 +49,7 @@ public class CustomerShiroRealm extends AuthorizingRealm {
 
     @Override
     public boolean supports(AuthenticationToken token) {
-        return token instanceof JwtToken || token instanceof UsernamePasswordToken;
+        return token instanceof BearerToken || token instanceof UsernamePasswordToken;
     }
 
 
@@ -102,8 +103,8 @@ public class CustomerShiroRealm extends AuthorizingRealm {
             return doGetUsernamePasswordTokenInfo((UsernamePasswordToken) token);
         }
 
-        if (token instanceof JwtToken) {
-            return doGetJwtTokenInfo((JwtToken) token);
+        if (token instanceof BearerToken) {
+            return doGetJwtTokenInfo((BearerToken) token);
         }
 
         //  不支持其他认证方式
@@ -138,7 +139,7 @@ public class CustomerShiroRealm extends AuthorizingRealm {
      * @param token JwtToken
      * @return SimpleAuthenticationInfo
      */
-    private AuthenticationInfo doGetJwtTokenInfo(JwtToken token) {
+    private AuthenticationInfo doGetJwtTokenInfo(BearerToken token) {
         return new SimpleAuthenticationInfo(token.getPrincipal(), token.getCredentials(),
                 this.getClass().getName());
     }

@@ -17,6 +17,7 @@ import com.nimbusds.jose.JOSEException;
 import java.text.ParseException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.BearerToken;
 import org.apache.shiro.authc.credential.SimpleCredentialsMatcher;
 
 /**
@@ -42,8 +43,8 @@ public class CustomerCredentialsMatcher extends SimpleCredentialsMatcher {
      */
     @Override
     public boolean doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) {
-        if (token instanceof JwtToken) {
-            return doCredentialsMatchJwtToken((JwtToken) token);
+        if (token instanceof BearerToken) {
+            return doCredentialsMatchJwtToken((BearerToken) token);
         } else {
             return super.doCredentialsMatch(token, info);
         }
@@ -55,7 +56,7 @@ public class CustomerCredentialsMatcher extends SimpleCredentialsMatcher {
      * @param token jwtToken
      * @return boolean
      */
-    private boolean doCredentialsMatchJwtToken(JwtToken token) {
+    private boolean doCredentialsMatchJwtToken(BearerToken token) {
         try {
             return ES256kJwtUtil.signatureVerify((String) token.getCredentials());
         } catch (ParseException | JOSEException e) {

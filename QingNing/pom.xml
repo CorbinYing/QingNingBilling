@@ -21,10 +21,10 @@
     </dependency>
 
 
-    <dependency>
-      <groupId>org.apache.shiro</groupId>
-      <artifactId>shiro-spring-boot-web-starter</artifactId>
-    </dependency>
+    <!--    <dependency>-->
+    <!--      <groupId>org.apache.shiro</groupId>-->
+    <!--      <artifactId>shiro-spring-boot-web-starter</artifactId>-->
+    <!--    </dependency>-->
     <dependency>
       <groupId>org.apache.shiro</groupId>
       <artifactId>shiro-core</artifactId>
@@ -34,12 +34,6 @@
       <groupId>org.apache.shiro</groupId>
       <artifactId>shiro-web</artifactId>
       <classifier>jakarta</classifier>
-      <exclusions>
-        <exclusion>
-          <groupId>org.apache.shiro</groupId>
-          <artifactId>shiro-core</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.shiro</groupId>
