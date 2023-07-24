@@ -69,7 +69,7 @@ public class CustomerShiroConfig {
 
         //配置资源访问权限,注意使用【有序MAP】，【/** 放最后】，否则范围大的现匹配，导致多个过滤器工作不正常
         Map<String, String> ruleMap = new LinkedHashMap<>();
-        ruleMap.put("/login/pwd-auth", "anon");
+        ruleMap.put("/auth/pwd-auth", "anon");
         //设置其他所有请求 使用自定义过滤器，未登录不允许进入。
         //一条路径配俩filter的语法，逗号间隔(还是翻源码看出来的，官方文档都没有)
         ruleMap.put("/**", "jwt");

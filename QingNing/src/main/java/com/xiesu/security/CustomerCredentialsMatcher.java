@@ -58,7 +58,7 @@ public class CustomerCredentialsMatcher extends SimpleCredentialsMatcher {
      */
     private boolean doCredentialsMatchJwtToken(BearerToken token) {
         try {
-            return ES256kJwtUtil.signatureVerify((String) token.getCredentials());
+            return ES256kJwtUtil.tokenVerify((String) token.getCredentials());
         } catch (ParseException | JOSEException e) {
             throw new RuntimeException(e);
         }

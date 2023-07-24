@@ -13,11 +13,22 @@
  */
 package com.xiesu.security;
 
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xiesu.common.response.ErrResponseResult;
+import com.xiesu.common.response.ResponseBuildUtil;
+import com.xiesu.common.response.ResponseCode;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import org.apache.shiro.web.filter.authc.BearerHttpAuthenticationFilter;
+import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 
 /**
  * 自定义一个Filter，用来拦截所有的请求判断是否携带Token isAccessAllowed()判断是否携带了有效的JwtToken
@@ -76,12 +87,53 @@ public class CustomerShiroFilter extends BearerHttpAuthenticationFilter {
     //    return true;
     //}
     //
-    ////登录失败时默认返回 401 状态码
-    //private void onLoginFail(ServletResponse response) throws IOException {
-    //    HttpServletResponse httpResponse = (HttpServletResponse) response;
-    //    httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-    //    httpResponse.getWriter().write("login error");
-    //}
+
+
+    /**
+     * 认证失败的操作,401 状态码,返回错误信息
+     * Builds the challenge for authorization by setting a HTTP <code>401</code> (Unauthorized)
+     * status as well as the
+     * response's {@link #AUTHENTICATE_HEADER AUTHENTICATE_HEADER}.
+     * <p/>
+     * The header value constructed is equal to:
+     * <p/>
+     * <code>{@link #getAuthcScheme() getAuthcScheme()} + " realm=\"" +
+     * {@link #getApplicationName() getApplicationName()} + "\"";</code>
+     *
+     * @param request  incoming ServletRequest, ignored by this implementation
+     * @param response outgoing ServletResponse
+     * @return false - this sends the challenge to be sent back
+     */
+    @Override
+    protected boolean sendChallenge(ServletRequest request, ServletResponse response) {
+        logger.info("Authentication required: sending 401 Authentication challenge response.");
+
+        HttpServletResponse httpResponse = WebUtils.toHttp(response);
+        httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        String authcHeader = getAuthcScheme() + " realm=\"" + getApplicationName() + "\"";
+        httpResponse.setHeader(AUTHENTICATE_HEADER, authcHeader);
+
+        httpResponse.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        httpResponse.setCharacterEncoding(StandardCharsets.UTF_8.name());
+
+        ErrResponseResult result = ResponseBuildUtil.failed().code(ResponseCode.ERR_101000)
+                .errMsg("Authentication Falid")
+                .build();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        //空值不参与序列化
+        objectMapper.setSerializationInclusion(Include.NON_EMPTY);
+        try {
+            PrintWriter writer = httpResponse.getWriter();
+            writer.write(objectMapper.writeValueAsString(result));
+            writer.flush();
+        } catch (IOException e) {
+            logger.error("sendChallenge json error");
+            throw new RuntimeException(e);
+        }
+
+        return false;
+    }
 }
 
 

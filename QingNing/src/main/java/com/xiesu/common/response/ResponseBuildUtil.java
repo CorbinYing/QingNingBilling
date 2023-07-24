@@ -59,7 +59,7 @@ public class ResponseBuildUtil implements Serializable {
         /**
          * 存放最终结果的有序
          */
-        private final Map<Object, Object> data = new LinkedHashMap<>();
+        private final Map<String, Object> data = new LinkedHashMap<>();
 
         /**
          * 具体的结果值
@@ -77,14 +77,14 @@ public class ResponseBuildUtil implements Serializable {
          *
          * @param map notnull
          */
-        public <K, V> SucResponseBuilder items(Map<K, V> map) {
+        public <V> SucResponseBuilder items(Map<String, V> map) {
             if (!(map == null || map.isEmpty())) {
                 data.putAll(map);
             }
             return this;
         }
 
-        public OkResponseResult<Map<Object, Object>> build() {
+        public OkResponseResult<Map<String, Object>> build() {
             return OkResponseResult.success(data);
         }
     }

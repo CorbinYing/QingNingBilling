@@ -11,24 +11,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xiesu.controller;
+package com.xiesu.security;
 
-import org.apache.shiro.SecurityUtils;
+import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.JWTClaimsSet.Builder;
+import java.util.Map;
 
 /**
- * 公共Controller，所有Controller均须继承，可定义通用相关方法
- *
- * @author xiesu
+ * @author xiesu created on 2023/7/24 11:11
  */
-public abstract class AbstractBaseController {
+public final class JwtClaimBuilder {
 
-    /**
-     * 获取当前登陆人账户
-     *
-     * @return 账户id
-     */
-    public String getCurrentUser() {
-        return SecurityUtils.getSubject().toString();
+    private JwtClaimBuilder() {
+    }
+
+    public static JWTClaimsSet.Builder builder() {
+        return new Builder();
     }
 
 }

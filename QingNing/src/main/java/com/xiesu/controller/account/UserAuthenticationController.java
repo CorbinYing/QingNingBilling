@@ -14,8 +14,14 @@
 package com.xiesu.controller.account;
 
 import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jwt.JWTClaimsSet;
+import com.xiesu.common.response.OkResponseResult;
+import com.xiesu.common.response.ResponseBuildUtil;
 import com.xiesu.controller.AbstractBaseController;
 import com.xiesu.security.ES256kJwtUtil;
+import com.xiesu.security.JwtClaimBuilder;
+import java.util.Date;
+import java.util.Map;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -31,8 +37,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @author xiesu
  */
 @RestController
-@RequestMapping("/login")
-public class UserLoginBaseController extends AbstractBaseController {
+@RequestMapping("/auth")
+public class UserAuthenticationController extends AbstractBaseController {
 
 
     /**
@@ -42,14 +48,34 @@ public class UserLoginBaseController extends AbstractBaseController {
      * @param pwdCiphertext 密码密文
      */
     @PostMapping("/pwd-auth")
-    public String loginByPwd(@RequestParam("auth-id") String authId,
-            @RequestParam("pwd-ciphertext") String pwdCiphertext) throws JOSEException {
+    public OkResponseResult<Map<String, Object>> loginByPwd(@RequestParam("auth-id") String authId,
+            @RequestParam("pwd-ciphertext") String pwdCiphertext)
+            throws JOSEException {
 
         AuthenticationToken token = new UsernamePasswordToken(authId, pwdCiphertext);
         Subject subject = SecurityUtils.getSubject();
         subject.login(token);
 
-        return ES256kJwtUtil.encode("1", 1000, null);
+        JWTClaimsSet accessClaims = JwtClaimBuilder.builder()
+                .claim("name", "test")
+                .audience(authId)
+                .claim("type", "accessToken")
+                .build();
+
+        JWTClaimsSet refreshClaims = JwtClaimBuilder.builder()
+                .audience(authId)
+                .expirationTime(new Date(System.currentTimeMillis() + 60 * 60 * 1000))
+                .claim("type", "refreshToken")
+                .build();
+
+        String accessToken = ES256kJwtUtil.encode(accessClaims);
+        String refreshToken = ES256kJwtUtil.encode(refreshClaims);
+
+        return ResponseBuildUtil.success()
+                .item("accessToken", accessToken)
+                .item("tokenType", "Bearer")
+                .item("refreshToken", refreshToken)
+                .build();
 
     }
 }

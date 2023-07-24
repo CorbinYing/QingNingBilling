@@ -51,7 +51,7 @@ public class TestController {
                 .item("name", "zhangsan")
                 .item("sysLabels", sysLabels)
                 .items(map)
-                .items(map1)
+                //.items(map1)
                 .build();
     }
 
